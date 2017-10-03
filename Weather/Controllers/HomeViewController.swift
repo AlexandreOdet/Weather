@@ -21,8 +21,9 @@ class HomeViewController: UIViewController {
   var resultsViewController: GMSAutocompleteResultsViewController?
   var searchController: UISearchController?
   var searchButton = UIButton()
-  
   var tableView: UITableView!
+  
+  let reuseIdentifier = "WeatherCustomCell"
   
   deinit {
     viewModel.restApiWeather.cancelRequest()
@@ -32,11 +33,28 @@ class HomeViewController: UIViewController {
     super.viewDidLoad()
     setUpSearchBar()
     setUpSearchButton()
-    viewModel.isValid.map{ $0 }.bind(to: searchButton.rx.isEnabled).addDisposableTo(disposeBag)
+    setUpTableView()
+    viewModel.isValid.map{ $0 }.bind(to: searchButton.rx.isEnabled).disposed(by: disposeBag)
   }
   
   private func setUpTableView() {
+    tableView = UITableView(frame: view.frame, style: .grouped)
+    tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     
+    view.addSubview(tableView)
+    tableView.snp.makeConstraints { (make) -> Void in
+      make.bottom.equalTo(searchButton.snp.top)
+      make.width.equalToSuperview()
+      if let navigationController = navigationController {
+        make.top.equalToSuperview().offset(UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height)
+      } else {
+        make.top.equalToSuperview().offset(UIApplication.shared.statusBarFrame.height)
+      }
+    }
+    viewModel.items.asObservable().bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: UITableViewCell.self)) {
+      row, element, cell in
+      cell.textLabel?.text = "\(element) \(row)"
+    }.disposed(by: disposeBag)
   }
   
   private func setUpSearchBar() {
@@ -60,10 +78,17 @@ class HomeViewController: UIViewController {
       make.width.equalToSuperview()
       make.height.equalTo(30)
     }
-    searchButton.backgroundColor = .red
+    searchButton.backgroundColor = .white
     searchButton.setTitle("Rechercher", for: .normal)
-    searchButton.setTitleColor(.blue, for: .disabled)
-    searchButton.setTitleColor(.white, for: .normal)
+    searchButton.setTitleColor(.lightGray, for: .disabled)
+    searchButton.setTitleColor(.black, for: .normal)
+    searchButton.addTarget(self, action: #selector(searchButtonTarget), for: .touchUpInside)
+  }
+  
+  @objc func searchButtonTarget() {
+    if searchButton.isEnabled {
+      viewModel.fetchWeatherFromApi(city: viewModel.cityName.value, country: viewModel.countryName.value)
+    }
   }
 }
 
@@ -71,23 +96,19 @@ extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
   func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didAutocompleteWith place: GMSPlace) {
     searchController?.isActive = false
     guard let components = place.addressComponents else { return }
-    for component in components {
-      print(component.name, component.type)
-    }
     guard let cityComponent = components.first(where: {$0.type == "locality"}) else {return}
     guard let countryComponent = components.first(where: {$0.type == "country"}) else {return}
     
     let city = Variable<String>(cityComponent.name)
     let country = Variable<String>(countryComponent.name)
     
-    city.asObservable().bind(to: viewModel.cityName).addDisposableTo(disposeBag)
-    country.asObservable().bind(to: viewModel.countryName).addDisposableTo(disposeBag)
+    city.asObservable().bind(to: viewModel.cityName).disposed(by: disposeBag)
+    country.asObservable().bind(to: viewModel.countryName).disposed(by: disposeBag)
     
-    searchController?.searchBar.text = "\(city.value), \(country.value)"
+    searchController?.searchBar.text = "\(viewModel.cityName.value), \(viewModel.countryName.value)"
   }
   
   func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didFailAutocompleteWithError error: Error) {
-    print(error)
   }
 }
 

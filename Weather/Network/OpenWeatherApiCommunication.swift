@@ -17,9 +17,11 @@ class OpenWeatherApiCommunication: RestApiBase {
   func getWeather(from city: String, country: String) -> Observable<APIResponseWeather> {
     let finalUrl = baseUrl + "weather?"
     parameters["q"] = city + ", " + country
-    return Observable.create({ observer in
-      self.request = Alamofire.request(finalUrl).responseObject(completionHandler: {
-        (response: DataResponse<APIResponseWeather>) in
+    UIApplication.shared.isNetworkActivityIndicatorVisible = true
+    return Observable<APIResponseWeather>.create({ observer -> Disposable in
+      self.request = Alamofire.request(finalUrl, parameters: self.parameters)
+        .validate()
+        .responseObject(completionHandler: { (response: DataResponse<APIResponseWeather>) in
         switch response.result {
         case .success(let data):
           observer.onNext(data)
@@ -28,7 +30,9 @@ class OpenWeatherApiCommunication: RestApiBase {
           observer.onError(error)
         }
       })
-      return Disposables.create()
+      return Disposables.create(with: {
+        self.request?.cancel()
+      })
     })
   }
 }
