@@ -16,4 +16,8 @@ class Constants {
   public class var openWeatherApiKey: String {
     return "2d59b6f6fd3b090e08101e1133911727"
   }
+  
+  public class var kelvinConverterValue: Double {
+    return 273.15
+  }
 }
