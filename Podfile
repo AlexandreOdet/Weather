@@ -5,7 +5,7 @@ target 'Weather' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   pod 'Alamofire'
-  pod 'ObjectMapper', '~> 2.2'
+  pod 'ObjectMapper'
   pod 'AlamofireObjectMapper'
 
   pod 'RxSwift', :git => 'https://github.com/ReactiveX/RxSwift.git', :branch => 'rxswift4.0-swift4.0'

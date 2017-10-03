@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     GMSPlacesClient.provideAPIKey(Constants.googleApiKey)
-    let navigationController = UINavigationController(rootViewController: ViewController())
+    let navigationController = UINavigationController(rootViewController: HomeViewController())
     window?.rootViewController = navigationController
     window?.makeKeyAndVisible()
     return true

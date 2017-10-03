@@ -8,11 +8,27 @@
 
 import Foundation
 import Alamofire
+import AlamofireObjectMapper
+import RxSwift
+import RxCocoa
 
 class OpenWeatherApiCommunication: RestApiBase {
   
-  func getWeatherFromCity(city: String, country: String) {
+  func getWeather(from city: String, country: String) -> Observable<APIResponseWeather> {
     let finalUrl = baseUrl + "weather?"
+    parameters["q"] = city + ", " + country
+    return Observable.create({ observer in
+      self.request = Alamofire.request(finalUrl).responseObject(completionHandler: {
+        (response: DataResponse<APIResponseWeather>) in
+        switch response.result {
+        case .success(let data):
+          observer.onNext(data)
+          observer.onCompleted()
+        case .failure(let error):
+          observer.onError(error)
+        }
+      })
+      return Disposables.create()
+    })
   }
-  
 }

@@ -30,13 +30,3 @@ class APIResponseSystemInfoValue: Mappable {
     sunset <- map["sunset"]
   }
 }
-/*
- "sys": {
- "type": 1,
- "id": 5091,
- "message": 0.0057,
- "country": "GB",
- "sunrise": 1507010715,
- "sunset": 1507051953
- },
- */
