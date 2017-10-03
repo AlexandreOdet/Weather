@@ -13,6 +13,9 @@ class APIResponseWeather: Mappable {
   var coordinates: APIResponseCoordinatesValue!
   var weathers: [APIResponseWeatherValue]!
   var base: String!
+  var weatherInfos: APIResponseWeatherInfosValue!
+  var visibility: Int!
+  var windInfo: APIResponseWindInfosValue!
   
   required init?(map: Map) {
   }

@@ -21,7 +21,11 @@ class APIResponseWeatherInfosValue: Mappable {
   }
   
   func mapping(map: Map) {
-    
+    temperature <- map["temp"]
+    pressure <- map["pressure"]
+    humidity <- map["humidity"]
+    minimalTemperature <- map["temp_min"]
+    maximalTemperature <- map["temp_max"]
   }
   
   /*

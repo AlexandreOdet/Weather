@@ -38,7 +38,7 @@ class ViewController: UIViewController {
     
     
     setUpSearchButton()
-    viewModel.isValid.map { $0 }.bind(to: searchButton.rx.isEnabled).addDisposableTo(disposeBag)
+    viewModel.isValid.map{ $0 }.bind(to: searchButton.rx.isEnabled).addDisposableTo(disposeBag)
   }
 
   override func didReceiveMemoryWarning() {
