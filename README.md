@@ -11,3 +11,7 @@ Using:
  - ObjectMapper
  - AlamofireObjectMapper
  - GooglePlacePicker
+
+And:
+
+ - MVVM Architecture
