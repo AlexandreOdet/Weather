@@ -20,4 +20,8 @@ class Constants {
   public class var kelvinConverterValue: Double {
     return 273.15
   }
+  
+  public class var kilometerHourConverterValue: Double {
+    return 3.6
+  }
 }

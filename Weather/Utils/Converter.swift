@@ -12,4 +12,8 @@ class Converter {
   public class func convertKelvinToCelsius(kelvin: Double) -> Double {
     return kelvin - Constants.kelvinConverterValue
   }
+  
+  public class func convertMeterSecondToKilometerHour(speed: Double) -> Double {
+    return speed * Constants.kilometerHourConverterValue
+  }
 }
