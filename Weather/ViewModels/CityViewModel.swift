@@ -11,6 +11,9 @@ import Foundation
 import RxSwift
 
 class CityViewModel {
+  
+  var restApiWeather = OpenWeatherApiCommunication()
+  
   var cityName = Variable<String>("")
   var countryName = Variable<String>("")
   

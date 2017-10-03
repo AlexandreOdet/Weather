@@ -12,7 +12,7 @@ import GooglePlaces
 import RxSwift
 import RxCocoa
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
 
   let disposeBag = DisposeBag()
   
@@ -22,8 +22,24 @@ class ViewController: UIViewController {
   var searchController: UISearchController?
   var searchButton = UIButton()
   
+  var tableView: UITableView!
+  
+  deinit {
+    viewModel.restApiWeather.cancelRequest()
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    setUpSearchBar()
+    setUpSearchButton()
+    viewModel.isValid.map{ $0 }.bind(to: searchButton.rx.isEnabled).addDisposableTo(disposeBag)
+  }
+  
+  private func setUpTableView() {
+    
+  }
+  
+  private func setUpSearchBar() {
     resultsViewController = GMSAutocompleteResultsViewController()
     resultsViewController?.delegate = self
     
@@ -35,17 +51,9 @@ class ViewController: UIViewController {
     searchController?.hidesNavigationBarDuringPresentation = false
     searchController?.dimsBackgroundDuringPresentation = false
     definesPresentationContext = true
-    
-    
-    setUpSearchButton()
-    viewModel.isValid.map{ $0 }.bind(to: searchButton.rx.isEnabled).addDisposableTo(disposeBag)
-  }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
   }
   
-  func setUpSearchButton() {
+  private func setUpSearchButton() {
     view.addSubview(searchButton)
     searchButton.snp.makeConstraints { (make) -> Void in
       make.bottom.equalToSuperview()
@@ -59,7 +67,7 @@ class ViewController: UIViewController {
   }
 }
 
-extension ViewController: GMSAutocompleteResultsViewControllerDelegate {
+extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
   func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didAutocompleteWith place: GMSPlace) {
     searchController?.isActive = false
     guard let components = place.addressComponents else { return }
@@ -82,3 +90,4 @@ extension ViewController: GMSAutocompleteResultsViewControllerDelegate {
     print(error)
   }
 }
+

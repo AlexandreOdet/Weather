@@ -45,10 +45,3 @@ class APIResponseWeather: Mappable {
     code <- map["cod"]
   }
 }
-/*
-
- "id": 2643743,
- "name": "London",
- "cod": 200
- }
- */
