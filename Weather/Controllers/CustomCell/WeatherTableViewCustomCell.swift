@@ -15,6 +15,11 @@ class WeatherTableViewCustomCell: UITableViewCell {
   var cityNameLabel = UILabel()
   var cityWeatherLabel = UILabel()
   
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setUpView()
+  }
+  
   init(reuseIdentifier: String) {
     super.init(style: .default, reuseIdentifier: reuseIdentifier)
     setUpView()

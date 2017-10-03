@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
   var resultsViewController: GMSAutocompleteResultsViewController?
   var searchController: UISearchController?
   var searchButton = UIButton()
-  var tableView: UITableView!
+  @IBOutlet weak var tableView: UITableView!
   
   let reuseIdentifier = "WeatherCustomCell"
   
@@ -38,22 +38,11 @@ class HomeViewController: UIViewController {
   }
   
   private func setUpTableView() {
-    tableView = UITableView(frame: view.frame, style: .grouped)
-    tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-    
-    view.addSubview(tableView)
-    tableView.snp.makeConstraints { (make) -> Void in
-      make.bottom.equalTo(searchButton.snp.top)
-      make.width.equalToSuperview()
-      if let navigationController = navigationController {
-        make.top.equalToSuperview().offset(UIApplication.shared.statusBarFrame.height + navigationController.navigationBar.frame.height)
-      } else {
-        make.top.equalToSuperview().offset(UIApplication.shared.statusBarFrame.height)
-      }
-    }
-    viewModel.items.asObservable().bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: UITableViewCell.self)) {
+    tableView.register(WeatherTableViewCustomCell.self, forCellReuseIdentifier: reuseIdentifier)
+    viewModel.items.asObservable().bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: WeatherTableViewCustomCell.self)) {
       row, element, cell in
-      cell.textLabel?.text = "\(element) \(row)"
+      cell.cityNameLabel.text = element.name
+      cell.cityWeatherLabel.text = element.weathers[0].weather
     }.disposed(by: disposeBag)
   }
   

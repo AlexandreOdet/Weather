@@ -17,9 +17,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     GMSPlacesClient.provideAPIKey(Constants.googleApiKey)
-    let navigationController = UINavigationController(rootViewController: HomeViewController())
-    window?.rootViewController = navigationController
-    window?.makeKeyAndVisible()
+    let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
+    if let rootViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
+      let navigationController = UINavigationController(rootViewController: rootViewController)
+      window?.rootViewController = navigationController
+      window?.makeKeyAndVisible()
+    }
     return true
   }
   
