@@ -43,12 +43,13 @@ class HomeViewController: UIViewController {
   
   private func setUpTableView() {
     tableView.register(WeatherTableViewCustomCell.self, forCellReuseIdentifier: reuseIdentifier)
-    viewModel.items.asObservable().bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: WeatherTableViewCustomCell.self)) {
+    viewModel.items.asObservable().bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier,
+                                                               cellType: WeatherTableViewCustomCell.self)) {
       row, element, cell in
       cell.cityNameLabel.text = element.name
       let urlString = "\(Constants.network.openWeatherApiIconsUrl)\(element.weathers![0].icon!)\(Constants.network.openWeatherApiIconsFormat)"
       let url = URL(string: urlString)
-      cell.cityWeatherIcon.kf.setImage(with: url!)
+      cell.cityWeatherIcon.kf.setImage(with: url)
     }.disposed(by: disposeBag)
     
     tableView.rx.itemSelected
@@ -57,10 +58,10 @@ class HomeViewController: UIViewController {
         if let cell = strongSelf.tableView.cellForRow(at: indexPath) {
           Animation.onClick(sender: cell.contentView)
         }
-        //let nextViewController = DetailWeatherViewController()
-        //nextViewController.viewModel = DetailViewModel()
-        //nextViewController.viewModel.weather = viewModel.items[indexPath.row]
-        //self.navigationController.pushViewController(nextViewController, animated: true)
+        guard let nextViewController = strongSelf.storyboard?.instantiateViewController(withIdentifier: "DetailWeatherViewController") as? DetailWeatherViewController else { return }
+        nextViewController.viewModel = DetailViewModel()
+        nextViewController.viewModel.currentWeather = strongSelf.viewModel.items.value[indexPath.row]
+        strongSelf.navigationController?.pushViewController(nextViewController, animated: true)
       }).disposed(by: disposeBag)
   }
   

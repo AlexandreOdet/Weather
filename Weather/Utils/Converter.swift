@@ -13,7 +13,15 @@ class Converter {
     return kelvin - Constants.metrics.kelvinConverterValue
   }
   
-  public class func convertMeterSecondToKilometerHour(speed: Double) -> Double {
-    return speed * Constants.metrics.kilometerHourConverterValue
+  public class func convertKelvinToFahrenheit(kelvin: Double) -> Double {
+    return kelvin * (9/5) - 459.67
+  }
+  
+  public class func convertMeterPerSecondToKilometerPerHour(speed: Double) -> Double {
+    return speed * Constants.metrics.kilometerPerHourConverterValue
+  }
+  
+  public class func convertMeterSecondToMilesHour(speed: Double) -> Double {
+    return speed * Constants.metrics.milesPerHourConverterValue
   }
 }

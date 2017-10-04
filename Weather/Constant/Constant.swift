@@ -36,8 +36,12 @@ final class Constants {
       return 273.15
     }
     
-    public class var kilometerHourConverterValue: Double {
+    public class var kilometerPerHourConverterValue: Double {
       return 3.6
+    }
+    
+    public class var milesPerHourConverterValue: Double {
+      return 2.23694
     }
   }
   

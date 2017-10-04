@@ -10,5 +10,5 @@ import Foundation
 import RxSwift
 
 class DetailViewModel: NSObject {
-  
+  var currentWeather: APIResponseWeather!
 }
