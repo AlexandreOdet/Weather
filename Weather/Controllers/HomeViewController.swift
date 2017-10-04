@@ -22,8 +22,6 @@ class HomeViewController: UIViewController {
   var searchController: UISearchController?
   var searchButton = UIButton()
   
-  var locationManager = CLLocationManager()
-  
   @IBOutlet weak var tableView: UITableView!
   
   let reuseIdentifier = "WeatherCustomCell"
@@ -93,30 +91,8 @@ class HomeViewController: UIViewController {
   }
   
   @objc func locateMeButtonTarget() {
-    
-    requestLocationAccess()
-    
-    if CLLocationManager.locationServicesEnabled() {
-      locationManager.startUpdatingLocation()
-      locationManager.desiredAccuracy = kCLLocationAccuracyBest
-      locationManager.delegate = self
-    }
+    viewModel.getUserLocation()
   }
-  
-  private func requestLocationAccess() {
-    let status = CLLocationManager.authorizationStatus()
-    
-    switch status {
-    case .authorizedAlways, .authorizedWhenInUse:
-      return
-      
-    case .denied, .restricted:
-      return
-    default:
-      locationManager.requestWhenInUseAuthorization()
-    }
-  }
-
 }
 
 extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
@@ -139,16 +115,4 @@ extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
   }
 }
 
-extension HomeViewController: CLLocationManagerDelegate {
-  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-    if let lastUserLocation = locations.last {
-      let lat = lastUserLocation.coordinate.latitude
-      let long = lastUserLocation.coordinate.longitude
-      
-      let coordinates = [lat, long]
-      viewModel.fetchWeatherFromApi(with: coordinates)
-    }
-    manager.stopUpdatingLocation()
-  }
-}
 

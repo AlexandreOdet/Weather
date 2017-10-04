@@ -7,10 +7,11 @@
 //
 
 import Foundation
+import CoreLocation
 
 import RxSwift
 
-class CityViewModel {
+class CityViewModel: NSObject {
   
   var restApiWeather = OpenWeatherApiCommunication()
   
@@ -19,6 +20,8 @@ class CityViewModel {
   var items = Variable<[APIResponseWeather]>([])
   
   private var disposeBag = DisposeBag()
+  private var locationManager = CLLocationManager()
+
   
   var isValid : Observable<Bool>{
     return Observable.combineLatest(self.cityName.asObservable(), self.countryName.asObservable()) { !$0.isEmpty && !$1.isEmpty }
@@ -55,4 +58,40 @@ class CityViewModel {
         return
     }).disposed(by: disposeBag)
   }
+  
+  func getUserLocation() {
+    requestLocationAccess()
+    if CLLocationManager.locationServicesEnabled() {
+      locationManager.startUpdatingLocation()
+      locationManager.desiredAccuracy = kCLLocationAccuracyBest
+      locationManager.delegate = self
+    }
+  }
+  
+  private func requestLocationAccess() {
+    let status = CLLocationManager.authorizationStatus()
+    
+    switch status {
+    case .authorizedAlways, .authorizedWhenInUse:
+      return
+      
+    case .denied, .restricted:
+      return
+    default:
+      locationManager.requestWhenInUseAuthorization()
+    }
+  }
+}
+
+extension CityViewModel: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+      if let lastUserLocation = locations.last {
+        let lat = lastUserLocation.coordinate.latitude
+        let long = lastUserLocation.coordinate.longitude
+  
+        let coordinates = [lat, long]
+        fetchWeatherFromApi(with: coordinates)
+      }
+      manager.stopUpdatingLocation()
+    }
 }
