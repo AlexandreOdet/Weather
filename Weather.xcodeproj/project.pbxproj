@@ -35,6 +35,7 @@
 		FA6552B71F7BED1200C78F1B /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6552B61F7BED1200C78F1B /* Constant.swift */; };
 		FA6DBDA91F7C1CED007FAD19 /* RestApiBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6DBDA81F7C1CED007FAD19 /* RestApiBase.swift */; };
 		FA6DBDAB1F7C1CFC007FAD19 /* OpenWeatherApiCommunication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6DBDAA1F7C1CFC007FAD19 /* OpenWeatherApiCommunication.swift */; };
+		FA9941AF1F8525F200F4CB8E /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9941AE1F8525F200F4CB8E /* Temperature.swift */; };
 		FAF64DBF1F85113A00557824 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF64DBE1F85113A00557824 /* Weather.swift */; };
 /* End PBXBuildFile section */
 
@@ -71,6 +72,7 @@
 		FA6552B61F7BED1200C78F1B /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		FA6DBDA81F7C1CED007FAD19 /* RestApiBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestApiBase.swift; sourceTree = "<group>"; };
 		FA6DBDAA1F7C1CFC007FAD19 /* OpenWeatherApiCommunication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWeatherApiCommunication.swift; sourceTree = "<group>"; };
+		FA9941AE1F8525F200F4CB8E /* Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		FAF64DBE1F85113A00557824 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -249,6 +251,7 @@
 			isa = PBXGroup;
 			children = (
 				FAF64DBE1F85113A00557824 /* Weather.swift */,
+				FA9941AE1F8525F200F4CB8E /* Temperature.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				FA502F6E1F84DBC8007D2BB2 /* DetailViewModel.swift in Sources */,
 				FA0415411F838F850066211F /* APIResponseWindInfosValue.swift in Sources */,
 				FA502F6A1F84D9E4007D2BB2 /* APIResponseForecast.swift in Sources */,
+				FA9941AF1F8525F200F4CB8E /* Temperature.swift in Sources */,
 				FA6552A11F7BE39D00C78F1B /* AppDelegate.swift in Sources */,
 				FA502F711F84DCCB007D2BB2 /* CityManager.swift in Sources */,
 				FA6552B71F7BED1200C78F1B /* Constant.swift in Sources */,
