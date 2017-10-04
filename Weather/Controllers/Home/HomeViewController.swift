@@ -112,6 +112,10 @@ extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
   }
   
   func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didFailAutocompleteWithError error: Error) {
+    let alert = UIAlertController(title: "Erreur", message: "Oups il semble y avoir un problème avec ta demande", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+    alert.addAction(UIAlertAction(title: "Annuler", style: .destructive, handler: nil))
+    present(alert, animated: true, completion: nil)
   }
 }
 

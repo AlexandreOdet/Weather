@@ -19,6 +19,7 @@
 		FA1878921F822778009876B5 /* APIResponseWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1878911F822778009876B5 /* APIResponseWeather.swift */; };
 		FA1878941F8227D8009876B5 /* APIResponseWeatherInfosValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1878931F8227D8009876B5 /* APIResponseWeatherInfosValue.swift */; };
 		FA1878971F822BCB009876B5 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1878961F822BCB009876B5 /* Converter.swift */; };
+		FA502F681F84D85E007D2BB2 /* DetailWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA502F671F84D85E007D2BB2 /* DetailWeatherViewController.swift */; };
 		FA6552A11F7BE39D00C78F1B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6552A01F7BE39D00C78F1B /* AppDelegate.swift */; };
 		FA6552A31F7BE39D00C78F1B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6552A21F7BE39D00C78F1B /* HomeViewController.swift */; };
 		FA6552A61F7BE39D00C78F1B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FA6552A41F7BE39D00C78F1B /* Main.storyboard */; };
@@ -45,6 +46,7 @@
 		FA1878911F822778009876B5 /* APIResponseWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseWeather.swift; sourceTree = "<group>"; };
 		FA1878931F8227D8009876B5 /* APIResponseWeatherInfosValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseWeatherInfosValue.swift; sourceTree = "<group>"; };
 		FA1878961F822BCB009876B5 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
+		FA502F671F84D85E007D2BB2 /* DetailWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWeatherViewController.swift; sourceTree = "<group>"; };
 		FA65529D1F7BE39D00C78F1B /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA6552A01F7BE39D00C78F1B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA6552A21F7BE39D00C78F1B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -89,8 +91,8 @@
 		FA18788C1F8223CE009876B5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				FA04154A1F83B5E90066211F /* CustomCell */,
-				FA6552A21F7BE39D00C78F1B /* HomeViewController.swift */,
+				FA502F661F84D841007D2BB2 /* Detail */,
+				FA502F651F84D82C007D2BB2 /* Home */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -101,6 +103,23 @@
 				FA1878961F822BCB009876B5 /* Converter.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		FA502F651F84D82C007D2BB2 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FA04154A1F83B5E90066211F /* CustomCell */,
+				FA6552A21F7BE39D00C78F1B /* HomeViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FA502F661F84D841007D2BB2 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				FA502F671F84D85E007D2BB2 /* DetailWeatherViewController.swift */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		FA6552941F7BE39D00C78F1B = {
@@ -345,6 +364,7 @@
 				FA0415471F8394FD0066211F /* APIResponseSnowInfosValue.swift in Sources */,
 				FA0415491F83951A0066211F /* APIResponseRainInfosValue.swift in Sources */,
 				FA1878901F8225EC009876B5 /* APIResponseWeatherValue.swift in Sources */,
+				FA502F681F84D85E007D2BB2 /* DetailWeatherViewController.swift in Sources */,
 				FA0415431F8390220066211F /* APIResponseCloudsInfoValue.swift in Sources */,
 				FA6552B41F7BE5AD00C78F1B /* CityViewModel.swift in Sources */,
 				FA0415411F838F850066211F /* APIResponseWindInfosValue.swift in Sources */,
