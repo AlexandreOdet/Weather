@@ -24,4 +24,10 @@ class Converter {
   public class func convertMeterSecondToMilesHour(speed: Double) -> Double {
     return speed * Constants.metrics.milesPerHourConverterValue
   }
+  
+  public class func convertAngleDegreesToCardinalDirection(degree: Double) -> CardinalDirection {
+    let calculatedValue = Int((degree / 22.5) + 0.5)
+    let directions = CardinalDirection.getCardinalDirectionsArray()
+    return directions[calculatedValue % 16]
+  }
 }

@@ -21,20 +21,27 @@ class DetailWeatherViewController: UIViewController {
   @IBOutlet weak var cityTemperatureLabel: UILabel!
   @IBOutlet weak var weatherSegmentedControl: UISegmentedControl!
   
-  private var temperature: Observable<Int> {
+  private var temperatureIndex: Observable<Int> {
     return weatherSegmentedControl
       .rx
       .selectedSegmentIndex
       .asObservable()
   }
   
+  private var cityName: Observable<String> {
+    return Observable.just(viewModel.currentWeather.name!)
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     setUpBinding()
+    print(Converter.convertAngleDegreesToCardinalDirection(degree: (viewModel.currentWeather.windInfo?.degree!)!).abreviation)
   }
   
   private func setUpBinding() {
-    temperature
+    cityName.bind(to: cityNameLabel.rx.text).disposed(by: disposeBag)
+    
+    temperatureIndex
       .map { [unowned self] index -> String in
         let temperatureExtension = Temperature(intValue: index).printableMetrics
         let currentTemp = self.viewModel.currentWeather.weatherInfos.temperature!
