@@ -24,4 +24,8 @@ class Constants {
   public class var kilometerHourConverterValue: Double {
     return 3.6
   }
+  
+  public class var citiesFileName: String {
+    return "cities.json"
+  }
 }

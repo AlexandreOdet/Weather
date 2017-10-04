@@ -21,7 +21,6 @@ class HomeViewModel: NSObject {
   
   private var disposeBag = DisposeBag()
   private var locationManager = CLLocationManager()
-
   
   var isValid : Observable<Bool>{
     return Observable.combineLatest(self.cityName.asObservable(), self.countryName.asObservable()) { !$0.isEmpty && !$1.isEmpty }
@@ -59,6 +58,16 @@ class HomeViewModel: NSObject {
     }).disposed(by: disposeBag)
   }
   
+  func viewDidLoad() {
+    
+  }
+  
+  func didTapSaveButton() {
+    
+  }
+}
+
+extension HomeViewModel: CLLocationManagerDelegate {
   func getUserLocation() {
     requestLocationAccess()
     if CLLocationManager.locationServicesEnabled() {
@@ -81,17 +90,15 @@ class HomeViewModel: NSObject {
       locationManager.requestWhenInUseAuthorization()
     }
   }
-}
-
-extension CityViewModel: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-      if let lastUserLocation = locations.last {
-        let lat = lastUserLocation.coordinate.latitude
-        let long = lastUserLocation.coordinate.longitude
   
-        let coordinates = [lat, long]
-        fetchWeatherFromApi(with: coordinates)
-      }
-      manager.stopUpdatingLocation()
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    if let lastUserLocation = locations.last {
+      let lat = lastUserLocation.coordinate.latitude
+      let long = lastUserLocation.coordinate.longitude
+      
+      let coordinates = [lat, long]
+      fetchWeatherFromApi(with: coordinates)
     }
+    manager.stopUpdatingLocation()
+  }
 }

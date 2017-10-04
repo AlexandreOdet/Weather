@@ -32,6 +32,7 @@ class HomeViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    viewModel.viewDidLoad()
     setUpSearchBar()
     setUpSearchButton()
     setUpTableView()
