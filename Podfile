@@ -14,6 +14,8 @@ target 'Weather' do
   pod 'GooglePlaces'
   pod 'GooglePlacePicker'
   pod 'GoogleMaps'
+  pod 'R.swift'
+  pod 'Kingfisher'
   
 
   # Pods for Weather

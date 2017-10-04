@@ -11,6 +11,7 @@ import SnapKit
 import GooglePlaces
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class HomeViewController: UIViewController {
 
@@ -45,7 +46,9 @@ class HomeViewController: UIViewController {
     viewModel.items.asObservable().bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: WeatherTableViewCustomCell.self)) {
       row, element, cell in
       cell.cityNameLabel.text = element.name
-      cell.cityWeatherLabel.text = element.weathers[0].weather
+      let urlString = "\(Constants.network.openWeatherApiIconsUrl)\(element.weathers![0].icon!)\(Constants.network.openWeatherApiIconsFormat)"
+      let url = URL(string: urlString)
+      cell.cityWeatherIcon.kf.setImage(with: url!)
     }.disposed(by: disposeBag)
     
     tableView.rx.itemSelected

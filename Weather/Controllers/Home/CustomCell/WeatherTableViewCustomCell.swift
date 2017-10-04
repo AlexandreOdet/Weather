@@ -13,7 +13,7 @@ import SnapKit
 class WeatherTableViewCustomCell: UITableViewCell {
   
   var cityNameLabel = UILabel()
-  var cityWeatherLabel = UILabel()
+  var cityWeatherIcon = UIImageView()
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -36,10 +36,12 @@ class WeatherTableViewCustomCell: UITableViewCell {
       make.centerY.equalToSuperview()
     }
     
-    contentView.addSubview(cityWeatherLabel)
-    cityWeatherLabel.snp.makeConstraints { (make) -> Void in
-      make.trailing.equalToSuperview().offset(-10)
+    contentView.addSubview(cityWeatherIcon)
+    cityWeatherIcon.snp.makeConstraints { (make) -> Void in
       make.centerY.equalToSuperview()
+      make.size.equalTo(30)
+      make.trailing.equalToSuperview().offset(-10)
     }
+    cityWeatherIcon.contentMode = .scaleAspectFit
   }
 }

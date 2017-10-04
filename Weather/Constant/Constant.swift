@@ -20,6 +20,14 @@ final class Constants {
     public class var openWeatherApiKey: String {
       return "2d59b6f6fd3b090e08101e1133911727"
     }
+    
+    public class var openWeatherApiIconsUrl: String {
+      return "https://openweathermap.org/img/w/"
+    }
+    
+    public class var openWeatherApiIconsFormat: String {
+      return ".png"
+    }
   }
   
   final class metrics {
