@@ -10,10 +10,10 @@ import Foundation
 
 class Converter {
   public class func convertKelvinToCelsius(kelvin: Double) -> Double {
-    return kelvin - Constants.kelvinConverterValue
+    return kelvin - Constants.metrics.kelvinConverterValue
   }
   
   public class func convertMeterSecondToKilometerHour(speed: Double) -> Double {
-    return speed * Constants.kilometerHourConverterValue
+    return speed * Constants.metrics.kilometerHourConverterValue
   }
 }

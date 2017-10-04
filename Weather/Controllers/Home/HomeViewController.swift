@@ -47,6 +47,18 @@ class HomeViewController: UIViewController {
       cell.cityNameLabel.text = element.name
       cell.cityWeatherLabel.text = element.weathers[0].weather
     }.disposed(by: disposeBag)
+    
+    tableView.rx.itemSelected
+      .subscribe(onNext: { [weak self] indexPath in
+        guard let strongSelf = self else { return }
+        if let cell = strongSelf.tableView.cellForRow(at: indexPath) {
+          Animation.onClick(sender: cell.contentView)
+        }
+        //let nextViewController = DetailWeatherViewController()
+        //nextViewController.viewModel = DetailViewModel()
+        //nextViewController.viewModel.weather = viewModel.items[indexPath.row]
+        //self.navigationController.pushViewController(nextViewController, animated: true)
+      }).disposed(by: disposeBag)
   }
   
   private func setUpSearchBar() {

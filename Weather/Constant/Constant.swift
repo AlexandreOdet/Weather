@@ -7,25 +7,42 @@
 //
 
 import Foundation
+import UIKit
 
-class Constants {
-  public class var googleApiKey: String {
-    return "AIzaSyBSmZs2SAcBjlKGEoaj8nmFtWmPyiO295E"
+final class Constants {
+  
+  final class network {
+    
+    public class var googleApiKey: String {
+      return "AIzaSyBSmZs2SAcBjlKGEoaj8nmFtWmPyiO295E"
+    }
+    
+    public class var openWeatherApiKey: String {
+      return "2d59b6f6fd3b090e08101e1133911727"
+    }
   }
   
-  public class var openWeatherApiKey: String {
-    return "2d59b6f6fd3b090e08101e1133911727"
+  final class metrics {
+    
+    public class var kelvinConverterValue: Double {
+      return 273.15
+    }
+    
+    public class var kilometerHourConverterValue: Double {
+      return 3.6
+    }
   }
   
-  public class var kelvinConverterValue: Double {
-    return 273.15
+  final class database {
+    
+    public class var citiesFileName: String {
+      return "cities.json"
+    }
   }
   
-  public class var kilometerHourConverterValue: Double {
-    return 3.6
-  }
-  
-  public class var citiesFileName: String {
-    return "cities.json"
+  final class duration {
+    public class var onClickDuration: Double {
+      return 0.5
+    }
   }
 }

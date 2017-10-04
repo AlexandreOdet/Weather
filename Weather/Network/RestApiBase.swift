@@ -14,7 +14,7 @@ class RestApiBase {
   
   let baseUrl = "https://api.openweathermap.org/data/2.5/"
   
-  var parameters = ["APPID":Constants.openWeatherApiKey]
+  var parameters = ["APPID":Constants.network.openWeatherApiKey]
   
   func cancelRequest() {
     request?.cancel()
