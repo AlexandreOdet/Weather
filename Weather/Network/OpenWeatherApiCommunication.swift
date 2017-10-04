@@ -57,5 +57,14 @@ class OpenWeatherApiCommunication: RestApiBase {
       })
     })
   }
+}
+
+extension OpenWeatherApiCommunication {
+  func getForecast(of city: String, in country: String) {
+    
+  }
   
+  func getForecast(of coordinates: [Double]) {
+    
+  }
 }

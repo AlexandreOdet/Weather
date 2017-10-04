@@ -16,7 +16,7 @@ class HomeViewController: UIViewController {
 
   let disposeBag = DisposeBag()
   
-  let viewModel = CityViewModel()
+  let viewModel = HomeViewModel()
   
   var resultsViewController: GMSAutocompleteResultsViewController?
   var searchController: UISearchController?
