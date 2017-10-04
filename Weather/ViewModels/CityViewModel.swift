@@ -18,14 +18,14 @@ class CityViewModel {
   var countryName = Variable<String>("")
   var items = Variable<[APIResponseWeather]>([])
   
-  fileprivate var disposeBag = DisposeBag()
+  private var disposeBag = DisposeBag()
   
   var isValid : Observable<Bool>{
     return Observable.combineLatest(self.cityName.asObservable(), self.countryName.asObservable()) { !$0.isEmpty && !$1.isEmpty }
   }
   
-  func fetchWeatherFromApi(city: String, country: String) {
-    restApiWeather.getWeather(from: city, country: country).subscribe(
+  func fetchWeatherFromApi(with city: String, in country: String) {
+    restApiWeather.getWeather(from: city, in: country).subscribe(
       onNext: { [weak self] data in
         guard let strongSelf = self else { return }
         if let index = strongSelf.items.value.index(where: { $0.name == data.name }) {
@@ -36,6 +36,22 @@ class CityViewModel {
         }
       },
       onError: { error in
+        return
+    }).disposed(by: disposeBag)
+  }
+  
+  func fetchWeatherFromApi(with coordinates: [Double]) {
+    restApiWeather.getWeather(from: coordinates).subscribe(
+      onNext: { [weak self] data in
+        guard let strongSelf = self else { return }
+        if let index = strongSelf.items.value.index(where: { $0.name == data.name }) {
+          strongSelf.items.value.remove(at: index)
+          strongSelf.items.value.insert(data, at: index)
+        } else {
+          strongSelf.items.value.append(data)
+        }
+      },
+      onError:{ _ in
         return
     }).disposed(by: disposeBag)
   }

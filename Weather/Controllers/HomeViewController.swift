@@ -21,6 +21,9 @@ class HomeViewController: UIViewController {
   var resultsViewController: GMSAutocompleteResultsViewController?
   var searchController: UISearchController?
   var searchButton = UIButton()
+  
+  var locationManager = CLLocationManager()
+  
   @IBOutlet weak var tableView: UITableView!
   
   let reuseIdentifier = "WeatherCustomCell"
@@ -34,6 +37,7 @@ class HomeViewController: UIViewController {
     setUpSearchBar()
     setUpSearchButton()
     setUpTableView()
+    setUpLocateMeButton()
     viewModel.isValid.map{ $0 }.bind(to: searchButton.rx.isEnabled).disposed(by: disposeBag)
   }
   
@@ -52,7 +56,7 @@ class HomeViewController: UIViewController {
     
     searchController = UISearchController(searchResultsController: resultsViewController)
     searchController?.searchResultsUpdater = resultsViewController
-    
+
     navigationItem.titleView = searchController?.searchBar
     searchController?.searchBar.sizeToFit()
     searchController?.hidesNavigationBarDuringPresentation = false
@@ -74,11 +78,45 @@ class HomeViewController: UIViewController {
     searchButton.addTarget(self, action: #selector(searchButtonTarget), for: .touchUpInside)
   }
   
+  private func setUpLocateMeButton() {
+    let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "navigation"),
+                                             style: .plain,
+                                             target: self,
+                                             action: #selector(locateMeButtonTarget))
+    navigationItem.rightBarButtonItem = rightBarButtonItem
+  }
+  
   @objc func searchButtonTarget() {
     if searchButton.isEnabled {
-      viewModel.fetchWeatherFromApi(city: viewModel.cityName.value, country: viewModel.countryName.value)
+      viewModel.fetchWeatherFromApi(with: viewModel.cityName.value, in: viewModel.countryName.value)
     }
   }
+  
+  @objc func locateMeButtonTarget() {
+    
+    requestLocationAccess()
+    
+    if CLLocationManager.locationServicesEnabled() {
+      locationManager.startUpdatingLocation()
+      locationManager.desiredAccuracy = kCLLocationAccuracyBest
+      locationManager.delegate = self
+    }
+  }
+  
+  private func requestLocationAccess() {
+    let status = CLLocationManager.authorizationStatus()
+    
+    switch status {
+    case .authorizedAlways, .authorizedWhenInUse:
+      return
+      
+    case .denied, .restricted:
+      return
+    default:
+      locationManager.requestWhenInUseAuthorization()
+    }
+  }
+
 }
 
 extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
@@ -98,6 +136,19 @@ extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
   }
   
   func resultsController(_ resultsController: GMSAutocompleteResultsViewController, didFailAutocompleteWithError error: Error) {
+  }
+}
+
+extension HomeViewController: CLLocationManagerDelegate {
+  func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    if let lastUserLocation = locations.last {
+      let lat = lastUserLocation.coordinate.latitude
+      let long = lastUserLocation.coordinate.longitude
+      
+      let coordinates = [lat, long]
+      viewModel.fetchWeatherFromApi(with: coordinates)
+    }
+    manager.stopUpdatingLocation()
   }
 }
 

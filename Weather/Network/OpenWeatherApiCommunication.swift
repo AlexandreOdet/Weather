@@ -14,7 +14,7 @@ import RxCocoa
 
 class OpenWeatherApiCommunication: RestApiBase {
   
-  func getWeather(from city: String, country: String) -> Observable<APIResponseWeather> {
+  func getWeather(from city: String, in country: String) -> Observable<APIResponseWeather> {
     let finalUrl = baseUrl + "weather?"
     parameters["q"] = city + ", " + country
     UIApplication.shared.isNetworkActivityIndicatorVisible = true
@@ -35,4 +35,27 @@ class OpenWeatherApiCommunication: RestApiBase {
       })
     })
   }
+  
+  func getWeather(from coordinates: [Double]) -> Observable<APIResponseWeather> {
+     let finalUrl = baseUrl + "weather?"
+    parameters["lat"] = String(coordinates[0])
+    parameters["lon"] = String(coordinates[1])
+    return Observable<APIResponseWeather>.create({ observer -> Disposable in
+      self.request = Alamofire.request(finalUrl, parameters: self.parameters)
+        .validate()
+        .responseObject(completionHandler: { (response: DataResponse<APIResponseWeather>) in
+          switch response.result {
+          case .success(let data):
+            observer.onNext(data)
+            observer.onCompleted()
+          case .failure(let error):
+            observer.onError(error)
+          }
+        })
+      return Disposables.create(with: {
+        self.request?.cancel()
+      })
+    })
+  }
+  
 }
