@@ -11,4 +11,12 @@ import RxSwift
 
 class DetailViewModel: NSObject {
   var currentWeather: APIResponseWeather!
+  
+  var sunriseDateTimestamp: Observable<Double> {
+    return Observable.just(currentWeather.systemInfos.sunrise)
+  }
+  
+  var sunsetDateTimestamp: Observable<Double> {
+    return Observable.just(currentWeather.systemInfos.sunset)
+  }
 }

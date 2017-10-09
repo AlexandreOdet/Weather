@@ -83,7 +83,6 @@ extension HomeViewModel: CLLocationManagerDelegate {
     switch status {
     case .authorizedAlways, .authorizedWhenInUse:
       return
-      
     case .denied, .restricted:
       return
     default:
