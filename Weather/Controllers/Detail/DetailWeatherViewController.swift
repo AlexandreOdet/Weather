@@ -26,13 +26,17 @@ class DetailWeatherViewController: UIViewController {
   @IBOutlet weak var sunsetLabel: UILabel!
   @IBOutlet weak var minimalTemperatureLabel: UILabel!
   @IBOutlet weak var maximalTemperatureLabel: UILabel!
+  
   @IBOutlet weak var sunriseIcon: UIImageView!
+  @IBOutlet weak var minimalTemperatureIcon: UIImageView!
   
   var separatorTopView = UIView()
   var separatorBottomView = UIView()
   
   var visibilityValueLabel = UILabel()
   var humidityValueLabel = UILabel()
+  var rainVolumeValueLabel = UILabel()
+  var cloudinessValueLabel = UILabel()
   
   deinit {
     viewModel.cancelRequest()
@@ -76,6 +80,8 @@ class DetailWeatherViewController: UIViewController {
   private func setUpCurrentWeatherInfos() {
     let visibilityImg = UIImageView(image: UIImage(named: "visibility"))
     let humidityImg = UIImageView(image: UIImage(named: "humidity"))
+    let rainImg = UIImageView(image: UIImage(named: "rain_icon"))
+    let cloudImg = UIImageView(image: UIImage(named: "cloud_icon"))
     
     view.addSubview(visibilityImg)
     visibilityImg.snp.makeConstraints { (make) -> Void in
@@ -93,23 +99,58 @@ class DetailWeatherViewController: UIViewController {
     }
     humidityImg.contentMode = .scaleAspectFit
     
+    view.addSubview(rainImg)
+    rainImg.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(visibilityImg)
+      make.centerX.equalTo(minimalTemperatureIcon)
+      make.size.equalTo(minimalTemperatureIcon)
+    }
+    rainImg.contentMode = .scaleAspectFit
+    
+    view.addSubview(rainVolumeValueLabel)
+    rainVolumeValueLabel.snp.makeConstraints { (make) -> Void in
+      make.trailing.equalToSuperview().offset(-10)
+      make.centerY.equalTo(rainImg)
+    }
+    rainVolumeValueLabel.font = rainVolumeValueLabel.font.withSize(14)
+    
+    view.addSubview(cloudImg)
+    cloudImg.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(humidityImg)
+      make.centerX.equalTo(rainImg)
+      make.size.equalTo(rainImg)
+    }
+    cloudImg.contentMode = .scaleAspectFit
+    
     view.addSubview(visibilityValueLabel)
     visibilityValueLabel.snp.makeConstraints { (make) -> Void in
       make.leading.equalTo(visibilityImg.snp.trailing).offset(5)
       make.centerY.equalTo(visibilityImg)
     }
+    visibilityValueLabel.font = visibilityValueLabel.font.withSize(14)
+    visibilityValueLabel.textAlignment = .center
     
     view.addSubview(humidityValueLabel)
     humidityValueLabel.snp.makeConstraints { (make) -> Void in
       make.leading.equalTo(humidityImg.snp.trailing).offset(5)
       make.centerY.equalTo(humidityImg)
     }
+    humidityValueLabel.font = humidityValueLabel.font.withSize(14)
+    humidityValueLabel.textAlignment = .center
   }
   
   private func setUpBinding() {
     cityNameLabel.text = "\(viewModel.currentWeather.name!)"
-    humidityValueLabel.text = "\(viewModel.currentWeather.weatherInfos.humidity!)%"
-    visibilityValueLabel.text = "\(viewModel.currentWeather.visibility! / 1000) km"
+    
+    viewModel.humidityPercentageValue.map { value -> String in
+      return "\(value)%"
+    }.bind(to: humidityValueLabel.rx.text)
+      .disposed(by: disposeBag)
+    
+    viewModel.visibilityValue.map { value -> String in
+      return "\(value / 1000) km"
+    }.bind(to: visibilityValueLabel.rx.text).disposed(by: disposeBag)
+    
     if let countryName = Utils.locale.getName(from: viewModel.currentWeather.systemInfos.country) {
       cityNameLabel.text?.append(", \(countryName)")
     }

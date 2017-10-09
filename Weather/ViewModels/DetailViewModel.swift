@@ -39,4 +39,12 @@ class DetailViewModel: NSObject {
   var sunsetDateTimestamp: Observable<Double> {
     return Observable.just(currentWeather.systemInfos.sunset)
   }
+  
+  var visibilityValue: Observable<Int> {
+    return Observable.just(currentWeather.visibility)
+  }
+  
+  var humidityPercentageValue: Observable<Int> {
+    return Observable.just(currentWeather.weatherInfos.humidity)
+  }
 }

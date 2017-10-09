@@ -162,6 +162,7 @@
                         <outlet property="cityNameLabel" destination="eUL-Uy-5Jy" id="Yfi-Lj-xid"/>
                         <outlet property="cityTemperatureLabel" destination="j6d-7F-6l6" id="cIh-fn-JHa"/>
                         <outlet property="maximalTemperatureLabel" destination="KXb-9Z-dJI" id="b72-id-KOp"/>
+                        <outlet property="minimalTemperatureIcon" destination="D6O-g6-hkl" id="0Ri-VP-d4Z"/>
                         <outlet property="minimalTemperatureLabel" destination="yzd-1g-uxG" id="lgd-0m-eBa"/>
                         <outlet property="sunriseIcon" destination="cMl-Sp-zvt" id="3YI-rp-sAi"/>
                         <outlet property="sunriseLabel" destination="3Dq-mS-IyM" id="Ubu-JU-H6q"/>
