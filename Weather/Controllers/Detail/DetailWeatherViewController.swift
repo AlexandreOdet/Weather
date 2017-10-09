@@ -26,9 +26,13 @@ class DetailWeatherViewController: UIViewController {
   @IBOutlet weak var sunsetLabel: UILabel!
   @IBOutlet weak var minimalTemperatureLabel: UILabel!
   @IBOutlet weak var maximalTemperatureLabel: UILabel!
+  @IBOutlet weak var sunriseIcon: UIImageView!
   
   var separatorTopView = UIView()
   var separatorBottomView = UIView()
+  
+  var visibilityValueLabel = UILabel()
+  var humidityValueLabel = UILabel()
   
   deinit {
     viewModel.cancelRequest()
@@ -47,6 +51,7 @@ class DetailWeatherViewController: UIViewController {
     navigationItem.backBarButtonItem?.title = ""
     viewModel.viewDidLoad()
     setUpSeparatorViews()
+    setUpCurrentWeatherInfos()
     setUpBinding()
   }
   
@@ -69,11 +74,42 @@ class DetailWeatherViewController: UIViewController {
   }
   
   private func setUpCurrentWeatherInfos() {
+    let visibilityImg = UIImageView(image: UIImage(named: "visibility"))
+    let humidityImg = UIImageView(image: UIImage(named: "humidity"))
     
+    view.addSubview(visibilityImg)
+    visibilityImg.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(separatorBottomView.snp.bottom).offset(10)
+      make.size.equalTo(sunriseIcon)
+      make.centerX.equalTo(sunriseIcon)
+    }
+    visibilityImg.contentMode = .scaleAspectFit
+    
+    view.addSubview(humidityImg)
+    humidityImg.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(visibilityImg.snp.bottom).offset(10)
+      make.size.equalTo(visibilityImg)
+      make.centerX.equalTo(visibilityImg)
+    }
+    humidityImg.contentMode = .scaleAspectFit
+    
+    view.addSubview(visibilityValueLabel)
+    visibilityValueLabel.snp.makeConstraints { (make) -> Void in
+      make.leading.equalTo(visibilityImg.snp.trailing).offset(5)
+      make.centerY.equalTo(visibilityImg)
+    }
+    
+    view.addSubview(humidityValueLabel)
+    humidityValueLabel.snp.makeConstraints { (make) -> Void in
+      make.leading.equalTo(humidityImg.snp.trailing).offset(5)
+      make.centerY.equalTo(humidityImg)
+    }
   }
   
   private func setUpBinding() {
     cityNameLabel.text = "\(viewModel.currentWeather.name!)"
+    humidityValueLabel.text = "\(viewModel.currentWeather.weatherInfos.humidity!)%"
+    visibilityValueLabel.text = "\(viewModel.currentWeather.visibility! / 1000) km"
     if let countryName = Utils.locale.getName(from: viewModel.currentWeather.systemInfos.country) {
       cityNameLabel.text?.append(", \(countryName)")
     }
