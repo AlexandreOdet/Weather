@@ -27,6 +27,10 @@ class DetailWeatherViewController: UIViewController {
   @IBOutlet weak var minimalTemperatureLabel: UILabel!
   @IBOutlet weak var maximalTemperatureLabel: UILabel!
   
+  var separatorTopView = UIView()
+  var separatorBottomView = UIView()
+  
+  
   private var temperatureIndex: Observable<Int> {
     return weatherSegmentedControl
       .rx
@@ -38,6 +42,7 @@ class DetailWeatherViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setUpBinding()
+    setUpSeparatorViews()
   }
   
   
@@ -101,5 +106,23 @@ class DetailWeatherViewController: UIViewController {
       return dateFormatter.string(from: date)
     }.bind(to: sunsetLabel.rx.text)
     .disposed(by: disposeBag)
+  }
+  
+  private func setUpSeparatorViews() {
+    view.addSubview(separatorTopView)
+    separatorTopView.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(sunriseLabel.snp.top).offset(-20)
+      make.height.equalTo(1)
+      make.width.equalToSuperview()
+    }
+    separatorTopView.backgroundColor = .lightGray
+    
+    view.addSubview(separatorBottomView)
+    separatorBottomView.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(sunsetLabel.snp.bottom).offset(20)
+      make.height.equalTo(1)
+      make.width.equalToSuperview()
+    }
+    separatorBottomView.backgroundColor = .lightGray
   }
 }
