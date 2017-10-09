@@ -10,7 +10,27 @@ import Foundation
 import RxSwift
 
 class DetailViewModel: NSObject {
+  
+  private let disposeBag = DisposeBag()
+  
   var currentWeather: APIResponseWeather!
+  var forecastWeather: APIResponseForecast!
+  
+  var openWeatherCommunication = OpenWeatherApiCommunication()
+  
+  func viewDidLoad() {
+    openWeatherCommunication.getForecast(of: currentWeather.name!, in: currentWeather.systemInfos.country!)
+      .subscribe(
+        onNext: { response in
+          print(response.linesCount)
+      },
+        onError: { _ in return
+      }).disposed(by: disposeBag)
+  }
+  
+  func cancelRequest() {
+    openWeatherCommunication.cancelRequest()
+  }
   
   var sunriseDateTimestamp: Observable<Double> {
     return Observable.just(currentWeather.systemInfos.sunrise)

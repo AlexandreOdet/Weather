@@ -30,6 +30,9 @@ class DetailWeatherViewController: UIViewController {
   var separatorTopView = UIView()
   var separatorBottomView = UIView()
   
+  deinit {
+    viewModel.cancelRequest()
+  }
   
   private var temperatureIndex: Observable<Int> {
     return weatherSegmentedControl
@@ -42,6 +45,7 @@ class DetailWeatherViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationItem.backBarButtonItem?.title = ""
+    viewModel.viewDidLoad()
     setUpSeparatorViews()
     setUpBinding()
   }

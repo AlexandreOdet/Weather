@@ -28,6 +28,11 @@ final class Constants {
     public class var openWeatherApiIconsFormat: String {
       return ".png"
     }
+    
+    public class var openWeatherApiForecastDateFormat: String {
+      return "yyyy-mm-dd HH:mm:ss"
+    }
+    
   }
   
   final class metrics {

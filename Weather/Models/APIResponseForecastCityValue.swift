@@ -13,6 +13,7 @@ class APIResponseForecastCityValue: Mappable {
   var id: Int!
   var name: String!
   var coordinates: APIResponseCoordinatesValue!
+  var country: String!
   
   required init?(map: Map) {
   }
@@ -21,5 +22,6 @@ class APIResponseForecastCityValue: Mappable {
     id <- map["id"]
     name <- map["name"]
     coordinates <- map["coord"]
+    country <- map["country"]
   }
 }
