@@ -17,6 +17,7 @@ target 'Weather' do
   pod 'R.swift'
   pod 'Kingfisher'
   pod 'TimeZoneLocate'
+  pod 'RxDataSources'
   
 
   # Pods for Weather

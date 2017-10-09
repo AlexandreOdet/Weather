@@ -7,3 +7,12 @@
 //
 
 import Foundation
+import ObjectMapper
+
+class APIResponseForecast: Mappable {
+  required init?(map: Map) {
+  }
+  
+  func mapping(map: Map) {
+  }
+}

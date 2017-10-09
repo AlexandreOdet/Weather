@@ -39,4 +39,11 @@ class Utils {
       return (isReachable && !needsConnection)
     }
   }
+  
+  class locale {
+    public class func getName(from countryCode: String) -> String? {
+      let current = Locale(identifier: countryCode)
+      return current.localizedString(forRegionCode: countryCode) ?? nil
+    }
+  }
 }

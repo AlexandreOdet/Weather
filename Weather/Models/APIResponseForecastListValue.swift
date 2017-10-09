@@ -14,6 +14,7 @@ class APIResponseForecastListValue: Mappable {
   var dataCalculation: Double!
   var weatherInfos: APIResponseWeatherInfosValue!
   var currentWeather: APIResponseWeatherValue!
+  var windInfos: APIResponseWindInfosValue!
   
   required init?(map: Map) {
   }

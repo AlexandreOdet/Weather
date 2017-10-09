@@ -41,13 +41,38 @@ class DetailWeatherViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setUpBinding()
+    navigationItem.backBarButtonItem?.title = ""
     setUpSeparatorViews()
+    setUpBinding()
   }
   
+  private func setUpSeparatorViews() {
+    view.addSubview(separatorTopView)
+    separatorTopView.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(sunriseLabel.snp.top).offset(-20)
+      make.height.equalTo(1)
+      make.width.equalToSuperview()
+    }
+    separatorTopView.backgroundColor = .lightGray
+    
+    view.addSubview(separatorBottomView)
+    separatorBottomView.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(sunsetLabel.snp.bottom).offset(20)
+      make.height.equalTo(1)
+      make.width.equalToSuperview()
+    }
+    separatorBottomView.backgroundColor = .lightGray
+  }
+  
+  private func setUpCurrentWeatherInfos() {
+    
+  }
   
   private func setUpBinding() {
-    cityNameLabel.text = viewModel.currentWeather.name
+    cityNameLabel.text = "\(viewModel.currentWeather.name!)"
+    if let countryName = Utils.locale.getName(from: viewModel.currentWeather.systemInfos.country) {
+      cityNameLabel.text?.append(", \(countryName)")
+    }
     
     temperatureIndex
       .map { [unowned self] index -> String in
@@ -93,8 +118,8 @@ class DetailWeatherViewController: UIViewController {
       dateFormatter.timeZone = location.timeZone
       let date = Date(timeIntervalSince1970: timestamp)
       return dateFormatter.string(from: date)
-    }.bind(to: sunriseLabel.rx.text)
-    .disposed(by: disposeBag)
+      }.bind(to: sunriseLabel.rx.text)
+      .disposed(by: disposeBag)
     
     viewModel.sunsetDateTimestamp.map { [unowned self] timestamp -> String in
       let location = CLLocation(latitude: self.viewModel.currentWeather.coordinates.latitude!,
@@ -104,25 +129,7 @@ class DetailWeatherViewController: UIViewController {
       dateFormatter.timeZone = location.timeZone
       let date = Date(timeIntervalSince1970: timestamp)
       return dateFormatter.string(from: date)
-    }.bind(to: sunsetLabel.rx.text)
-    .disposed(by: disposeBag)
-  }
-  
-  private func setUpSeparatorViews() {
-    view.addSubview(separatorTopView)
-    separatorTopView.snp.makeConstraints { (make) -> Void in
-      make.top.equalTo(sunriseLabel.snp.top).offset(-20)
-      make.height.equalTo(1)
-      make.width.equalToSuperview()
-    }
-    separatorTopView.backgroundColor = .lightGray
-    
-    view.addSubview(separatorBottomView)
-    separatorBottomView.snp.makeConstraints { (make) -> Void in
-      make.top.equalTo(sunsetLabel.snp.bottom).offset(20)
-      make.height.equalTo(1)
-      make.width.equalToSuperview()
-    }
-    separatorBottomView.backgroundColor = .lightGray
+      }.bind(to: sunsetLabel.rx.text)
+      .disposed(by: disposeBag)
   }
 }
