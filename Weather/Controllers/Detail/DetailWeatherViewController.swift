@@ -24,11 +24,7 @@ class DetailWeatherViewController: UIViewController {
   @IBOutlet weak var weatherSegmentedControl: UISegmentedControl!
   @IBOutlet weak var sunriseLabel: UILabel!
   @IBOutlet weak var sunsetLabel: UILabel!
-  
-  deinit {
-    viewModel.googleApiCommunication.cancelRequest()
-  }
-  
+
   private var temperatureIndex: Observable<Int> {
     return weatherSegmentedControl
       .rx
@@ -40,6 +36,7 @@ class DetailWeatherViewController: UIViewController {
     super.viewDidLoad()
     setUpBinding()
   }
+  
   
   private func setUpBinding() {
     cityNameLabel.text = viewModel.currentWeather.name
