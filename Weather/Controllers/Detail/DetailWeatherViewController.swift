@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import SnapKit
 import RxSwift
+import TimeZoneLocate
+import CoreLocation
 
 class DetailWeatherViewController: UIViewController {
   
@@ -23,6 +25,10 @@ class DetailWeatherViewController: UIViewController {
   @IBOutlet weak var sunriseLabel: UILabel!
   @IBOutlet weak var sunsetLabel: UILabel!
   
+  deinit {
+    viewModel.googleApiCommunication.cancelRequest()
+  }
+  
   private var temperatureIndex: Observable<Int> {
     return weatherSegmentedControl
       .rx
@@ -33,9 +39,6 @@ class DetailWeatherViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     setUpBinding()
-    print(Converter.convertAngleDegreesToCardinalDirection(degree: (viewModel.currentWeather.windInfo?.degree!)!).abreviation)
-    print("Sunrise -> ", Date(timeIntervalSince1970: viewModel.currentWeather.systemInfos.sunrise))
-    print("Sunset -> ", Date(timeIntervalSince1970: viewModel.currentWeather.systemInfos.sunset))
   }
   
   private func setUpBinding() {
@@ -55,15 +58,25 @@ class DetailWeatherViewController: UIViewController {
       .bind(to: cityTemperatureLabel.rx.text)
       .disposed(by: disposeBag)
     
-    viewModel.sunriseDateTimestamp.map { timestamp -> String in
-      _ = timestamp
-      return ""
+    viewModel.sunriseDateTimestamp.map { [unowned self] timestamp -> String in
+      let location = CLLocation(latitude: self.viewModel.currentWeather.coordinates.latitude!,
+                                longitude: self.viewModel.currentWeather.coordinates.longitude!)
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "HH:mm"
+      dateFormatter.timeZone = location.timeZone
+      let date = Date(timeIntervalSince1970: timestamp)
+      return dateFormatter.string(from: date)
     }.bind(to: sunriseLabel.rx.text)
     .disposed(by: disposeBag)
     
-    viewModel.sunsetDateTimestamp.map { timestamp -> String in
-      _ = timestamp
-      return ""
+    viewModel.sunsetDateTimestamp.map { [unowned self] timestamp -> String in
+      let location = CLLocation(latitude: self.viewModel.currentWeather.coordinates.latitude!,
+                                longitude: self.viewModel.currentWeather.coordinates.longitude!)
+      let dateFormatter = DateFormatter()
+      dateFormatter.dateFormat = "HH:mm"
+      dateFormatter.timeZone = location.timeZone
+      let date = Date(timeIntervalSince1970: timestamp)
+      return dateFormatter.string(from: date)
     }.bind(to: sunsetLabel.rx.text)
     .disposed(by: disposeBag)
   }

@@ -11,8 +11,8 @@ import ObjectMapper
 
 class APIResponseCoordinatesValue: Mappable {
   
-  var latitude: Double?
-  var longitude: Double?
+  var latitude: Double!
+  var longitude: Double!
   
   required init?(map: Map) {
     
@@ -20,7 +20,7 @@ class APIResponseCoordinatesValue: Mappable {
   
   func mapping(map: Map) {
     latitude <- map["lat"]
-    longitude <- map["long"]
+    longitude <- map["lon"]
   }
   
   //"lon":139,"lat":35

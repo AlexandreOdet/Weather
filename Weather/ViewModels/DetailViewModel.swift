@@ -11,6 +11,7 @@ import RxSwift
 
 class DetailViewModel: NSObject {
   var currentWeather: APIResponseWeather!
+  var googleApiCommunication = GoogleMapsTimeZoneApiCommunications()
   
   var sunriseDateTimestamp: Observable<Double> {
     return Observable.just(currentWeather.systemInfos.sunrise)
