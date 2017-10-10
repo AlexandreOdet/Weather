@@ -178,7 +178,9 @@ class DetailWeatherViewController: UIViewController {
       nf.maximumFractionDigits = 1
       let temperatureString = nf.string(from: NSNumber(value: convertedTemperature)) ?? "--"
       return "\(String(describing: temperatureString))\(temperatureExtension)"
-      }.bind(to: minimalTemperatureLabel.rx.text).disposed(by: disposeBag)
+      }
+      .bind(to: minimalTemperatureLabel.rx.text)
+      .disposed(by: disposeBag)
     
     temperatureIndex.map { [unowned self] index -> String in
       let temperatureExtension = Temperature(intValue: index).printableMetrics
@@ -189,7 +191,9 @@ class DetailWeatherViewController: UIViewController {
       nf.maximumFractionDigits = 1
       let temperatureString = nf.string(from: NSNumber(value: convertedTemperature)) ?? "--"
       return "\(String(describing: temperatureString))\(temperatureExtension)"
-      }.bind(to: maximalTemperatureLabel.rx.text).disposed(by: disposeBag)
+      }
+      .bind(to: maximalTemperatureLabel.rx.text)
+      .disposed(by: disposeBag)
     
     viewModel.sunriseDateTimestamp.map { [unowned self] timestamp -> String in
       let location = CLLocation(latitude: self.viewModel.currentWeather.coordinates.latitude!,
@@ -199,7 +203,8 @@ class DetailWeatherViewController: UIViewController {
       dateFormatter.timeZone = location.timeZone
       let date = Date(timeIntervalSince1970: timestamp)
       return dateFormatter.string(from: date)
-      }.bind(to: sunriseLabel.rx.text)
+      }
+      .bind(to: sunriseLabel.rx.text)
       .disposed(by: disposeBag)
     
     viewModel.sunsetDateTimestamp.map { [unowned self] timestamp -> String in
@@ -210,7 +215,8 @@ class DetailWeatherViewController: UIViewController {
       dateFormatter.timeZone = location.timeZone
       let date = Date(timeIntervalSince1970: timestamp)
       return dateFormatter.string(from: date)
-      }.bind(to: sunsetLabel.rx.text)
+      }
+      .bind(to: sunsetLabel.rx.text)
       .disposed(by: disposeBag)
   }
 }

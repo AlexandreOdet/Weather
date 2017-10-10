@@ -18,11 +18,18 @@ class DetailViewModel: NSObject {
   
   var openWeatherCommunication = OpenWeatherApiCommunication()
   
+  var collectionViewsItems = Variable<[APIResponseForecastListValue]>([])
+  
   func viewDidLoad() {
     openWeatherCommunication.getForecast(of: currentWeather.name!, in: currentWeather.systemInfos.country!)
       .subscribe(
-        onNext: { response in
+        onNext: { [weak self] response in
           print(response.linesCount)
+          guard let strongSelf = self else { return }
+          if !strongSelf.collectionViewsItems.value.isEmpty {
+            strongSelf.collectionViewsItems.value.removeAll()
+          }
+          strongSelf.collectionViewsItems.value.append(contentsOf: response.weatherList)
       },
         onError: { _ in return
       }).disposed(by: disposeBag)

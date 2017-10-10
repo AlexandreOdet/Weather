@@ -38,7 +38,7 @@
 		FA9941AF1F8525F200F4CB8E /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9941AE1F8525F200F4CB8E /* Temperature.swift */; };
 		FA9941B11F85339000F4CB8E /* CardinalDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9941B01F85339000F4CB8E /* CardinalDirections.swift */; };
 		FAAD98291F8BA80200B4199B /* APIResponseForecastCityValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD98281F8BA80200B4199B /* APIResponseForecastCityValue.swift */; };
-		FAF64DBF1F85113A00557824 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF64DBE1F85113A00557824 /* Weather.swift */; };
+		FAF0160B1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0160A1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,7 +77,7 @@
 		FA9941AE1F8525F200F4CB8E /* Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		FA9941B01F85339000F4CB8E /* CardinalDirections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardinalDirections.swift; sourceTree = "<group>"; };
 		FAAD98281F8BA80200B4199B /* APIResponseForecastCityValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseForecastCityValue.swift; sourceTree = "<group>"; };
-		FAF64DBE1F85113A00557824 /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		FAF0160A1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastWeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +146,7 @@
 		FA502F661F84D841007D2BB2 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				FAF016091F8CAF080041CFE1 /* CustomCells */,
 				FA502F671F84D85E007D2BB2 /* DetailWeatherViewController.swift */,
 			);
 			path = Detail;
@@ -252,10 +253,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		FAF016091F8CAF080041CFE1 /* CustomCells */ = {
+			isa = PBXGroup;
+			children = (
+				FAF0160A1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift */,
+			);
+			path = CustomCells;
+			sourceTree = "<group>";
+		};
 		FAF64DBD1F85112800557824 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
-				FAF64DBE1F85113A00557824 /* Weather.swift */,
 				FA9941AE1F8525F200F4CB8E /* Temperature.swift */,
 				FA9941B01F85339000F4CB8E /* CardinalDirections.swift */,
 			);
@@ -427,10 +435,10 @@
 				FA0415471F8394FD0066211F /* APIResponseSnowInfosValue.swift in Sources */,
 				FA0415491F83951A0066211F /* APIResponseRainInfosValue.swift in Sources */,
 				FA1878901F8225EC009876B5 /* APIResponseWeatherValue.swift in Sources */,
-				FAF64DBF1F85113A00557824 /* Weather.swift in Sources */,
 				FA502F681F84D85E007D2BB2 /* DetailWeatherViewController.swift in Sources */,
 				FA0415431F8390220066211F /* APIResponseCloudsInfoValue.swift in Sources */,
 				FA502F6C1F84DA39007D2BB2 /* APIResponseForecastListValue.swift in Sources */,
+				FAF0160B1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift in Sources */,
 				FA6552B41F7BE5AD00C78F1B /* HomeViewModel.swift in Sources */,
 				FA502F6E1F84DBC8007D2BB2 /* DetailViewModel.swift in Sources */,
 				FA0415411F838F850066211F /* APIResponseWindInfosValue.swift in Sources */,

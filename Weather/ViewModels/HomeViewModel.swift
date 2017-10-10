@@ -59,11 +59,11 @@ class HomeViewModel: NSObject {
   }
   
   func viewDidLoad() {
-    
+    CityManager.fetchCitiesFromFile()
   }
   
   func didTapSaveButton() {
-    
+    CityManager.saveCitiesToFile()
   }
 }
 
