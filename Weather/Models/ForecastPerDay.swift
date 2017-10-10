@@ -34,4 +34,16 @@ class ForecastPerDay {
     return max.weatherInfos.maximalTemperature
   }
   
+  var iconForThisDay: String {
+    var iconsInWeathers = [String:Int]()
+    for item in weathers {
+        iconsInWeathers[item.currentWeather[0].icon] = (iconsInWeathers[item.currentWeather[0].icon] ?? 0) + 1
+    }
+    let maxElement = iconsInWeathers.max(by: {
+        return $0.value < $1.value
+    })
+    guard let max = maxElement else { return "Error" }
+    return max.key
+  }
+  
 }

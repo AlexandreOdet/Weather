@@ -13,7 +13,7 @@ class APIResponseForecastListValue: Mappable {
   
   var dataCalculation: Double!
   var weatherInfos: APIResponseWeatherInfosValue!
-  var currentWeather: APIResponseWeatherValue!
+  var currentWeather: [APIResponseWeatherValue]!
   var windInfos: APIResponseWindInfosValue!
   var cloudInfos: APIResponseCloudsInfoValue!
   var date: String!

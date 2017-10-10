@@ -40,17 +40,23 @@ class DetailViewModel: NSObject {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = Constants.network.openWeatherApiForecastDateFormat
     let calendar = Calendar.current
+    var weathers = [APIResponseForecastListValue]()
+    
     serverResponse.weatherList.forEach { item -> Void in
       guard let currentDate = dateFormatter.date(from: item.date) else { return }
-      let forecast = ForecastPerDay(day: -1, weathers: [])
       let day = calendar.component(.weekday, from: currentDate)
       if day != currentDayOfTheWeek {
+        let forecast = ForecastPerDay(day: day, weathers: weathers)
         collectionViewsItems.value.append(forecast)
         currentDayOfTheWeek = day
+        weathers.removeAll()
         forecast.dayOfTheWeek = currentDayOfTheWeek
       }
-      forecast.weathers.append(item)
+      weathers.append(item)
     }
+    print(collectionViewsItems.value.forEach {
+        print($0.iconForThisDay)
+    })
   }
   
   func cancelRequest() {

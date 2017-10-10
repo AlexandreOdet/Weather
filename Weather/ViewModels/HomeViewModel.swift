@@ -35,8 +35,7 @@ class HomeViewModel: NSObject {
       onNext: { [weak self] data in
         guard let strongSelf = self else { return }
         if let index = strongSelf.items.value.index(where: { $0.name == data.name }) {
-          strongSelf.items.value.remove(at: index)
-          strongSelf.items.value.insert(data, at: index)
+          strongSelf.items.value[index] = data
         } else {
           strongSelf.items.value.append(data)
         }
