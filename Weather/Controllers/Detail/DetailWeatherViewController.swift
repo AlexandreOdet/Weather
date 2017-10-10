@@ -17,6 +17,7 @@ class DetailWeatherViewController: UIViewController {
   
   private let disposeBag = DisposeBag()
   
+  private let collectionViewReuseIdentifier = "WeatherForecastCell"
   var viewModel: DetailViewModel!
   
   @IBOutlet weak var cityNameLabel: UILabel!
@@ -38,6 +39,8 @@ class DetailWeatherViewController: UIViewController {
   var rainVolumeValueLabel = UILabel()
   var cloudinessValueLabel = UILabel()
   
+  var collectionView: UICollectionView!
+  
   deinit {
     viewModel.cancelRequest()
   }
@@ -56,6 +59,7 @@ class DetailWeatherViewController: UIViewController {
     viewModel.viewDidLoad()
     setUpSeparatorViews()
     setUpCurrentWeatherInfos()
+    setUpCollectionView()
     setUpBinding()
   }
   
@@ -137,6 +141,34 @@ class DetailWeatherViewController: UIViewController {
     }
     humidityValueLabel.font = humidityValueLabel.font.withSize(14)
     humidityValueLabel.textAlignment = .center
+  }
+  
+  private func setUpCollectionView() {
+    
+    let width = UIScreen.main.bounds.width
+    
+    let layout = UICollectionViewFlowLayout()
+    layout.scrollDirection = .horizontal
+    layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    layout.itemSize = CGSize(width: (width - 100) / 5, height: 30)
+    
+    collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
+    collectionView.register(ForecastWeatherCollectionViewCell.self, forCellWithReuseIdentifier: collectionViewReuseIdentifier)
+    
+    view.addSubview(collectionView)
+    collectionView.snp.makeConstraints { (make) -> Void in
+      make.bottom.equalToSuperview().offset(-10)
+      make.leading.equalToSuperview()
+      make.trailing.equalToSuperview()
+      make.height.equalTo(50)
+    }
+    
+    viewModel.collectionViewsItems.asObservable()
+      .bind(to: collectionView.rx.items(cellIdentifier: collectionViewReuseIdentifier, cellType: ForecastWeatherCollectionViewCell.self))
+      { row, element, cell in
+        cell.backgroundColor = .orange
+        cell.label.text = "\(row)"
+    }.disposed(by: disposeBag)
   }
   
   private func setUpBinding() {

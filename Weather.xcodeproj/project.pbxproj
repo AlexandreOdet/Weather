@@ -120,6 +120,7 @@
 		FA18788C1F8223CE009876B5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				FAF0160C1F8CC4F30041CFE1 /* Forecast */,
 				FA502F661F84D841007D2BB2 /* Detail */,
 				FA502F651F84D82C007D2BB2 /* Home */,
 			);
@@ -259,6 +260,13 @@
 				FAF0160A1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift */,
 			);
 			path = CustomCells;
+			sourceTree = "<group>";
+		};
+		FAF0160C1F8CC4F30041CFE1 /* Forecast */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Forecast;
 			sourceTree = "<group>";
 		};
 		FAF64DBD1F85112800557824 /* Enums */ = {
