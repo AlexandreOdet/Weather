@@ -22,6 +22,10 @@ class HomeViewModel: NSObject {
   private var disposeBag = DisposeBag()
   private var locationManager = CLLocationManager()
   
+  func cancelRequest() {
+    restApiWeather.cancelRequest()
+  }
+  
   var isValid : Observable<Bool>{
     return Observable.combineLatest(self.cityName.asObservable(), self.countryName.asObservable()) { !$0.isEmpty && !$1.isEmpty }
   }

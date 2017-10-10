@@ -28,7 +28,7 @@ class HomeViewController: UIViewController {
   let reuseIdentifier = "WeatherCustomCell"
   
   deinit {
-    viewModel.restApiWeather.cancelRequest()
+    viewModel.cancelRequest()
   }
   
   override func viewDidLoad() {
@@ -59,8 +59,7 @@ class HomeViewController: UIViewController {
           Animation.onClick(sender: cell.contentView)
         }
         guard let nextViewController = strongSelf.storyboard?.instantiateViewController(withIdentifier: "DetailWeatherViewController") as? DetailWeatherViewController else { return }
-        nextViewController.viewModel = DetailViewModel()
-        nextViewController.viewModel.currentWeather = strongSelf.viewModel.items.value[indexPath.row]
+        nextViewController.viewModel = DetailViewModel(weather: strongSelf.viewModel.items.value[indexPath.row])
         strongSelf.navigationController?.pushViewController(nextViewController, animated: true)
       }).disposed(by: disposeBag)
   }

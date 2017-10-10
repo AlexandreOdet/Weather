@@ -20,6 +20,10 @@ class DetailViewModel: NSObject {
   
   var collectionViewsItems = Variable<[APIResponseForecastListValue]>([])
   
+  init(weather: APIResponseWeather) {
+    currentWeather = weather
+  }
+  
   func viewDidLoad() {
     openWeatherCommunication.getForecast(of: currentWeather.name!, in: currentWeather.systemInfos.country!)
       .subscribe(
