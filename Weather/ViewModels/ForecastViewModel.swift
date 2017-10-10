@@ -11,13 +11,13 @@ import RxSwift
 
 class ForecastViewModel {
   
-  var forecastOfTheDay: ThreeHoursWeather!
+  var forecastOfTheDay: ForecastPerDay!
   
   var itemsForTableView: Observable<[APIResponseForecastListValue]> {
     return Observable.just(forecastOfTheDay.weathers)
   }
   
-  init(forecast: ThreeHoursWeather) {
+  init(forecast: ForecastPerDay) {
     forecastOfTheDay = forecast
   }
   

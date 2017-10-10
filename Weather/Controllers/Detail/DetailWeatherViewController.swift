@@ -31,6 +31,8 @@ class DetailWeatherViewController: UIViewController {
   @IBOutlet weak var sunriseIcon: UIImageView!
   @IBOutlet weak var minimalTemperatureIcon: UIImageView!
   
+  var hourInCustomCity = UILabel()
+  
   var separatorTopView = UIView()
   var separatorBottomView = UIView()
   
@@ -144,13 +146,10 @@ class DetailWeatherViewController: UIViewController {
   }
   
   private func setUpCollectionView() {
-    
-    let width = UIScreen.main.bounds.width
-    
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
     layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    layout.itemSize = CGSize(width: (width - 110) / 5, height: 50)
+    layout.itemSize = CGSize(width: 100, height: 50)
     
     collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
     collectionView.register(ForecastWeatherCollectionViewCell.self, forCellWithReuseIdentifier: collectionViewReuseIdentifier)
@@ -167,8 +166,20 @@ class DetailWeatherViewController: UIViewController {
       .bind(to: collectionView.rx.items(cellIdentifier: collectionViewReuseIdentifier, cellType: ForecastWeatherCollectionViewCell.self))
       { row, element, cell in
         cell.backgroundColor = .orange
-        cell.label.text = "\(row)"
-    }.disposed(by: disposeBag)
+        cell.label.text = "\(WeekDay(dayOfTheWeek: element.dayOfTheWeek).printableValue)"
+        cell.label.adjustsFontSizeToFitWidth = true
+    }
+      .disposed(by: disposeBag)
+    
+    collectionView.rx.itemSelected
+      .subscribe(onNext: { [weak self] indexPath in
+//        guard let strongSelf = self else { return }
+//        if let cell = strongSelf.collectionView.cellForItem(at: indexPath) {
+//          Animation.onClick(sender: cell.contentView)
+//        }
+        print("CollectionView.itemSelected at \(indexPath)")
+      })
+      .disposed(by: disposeBag)
   }
   
   private func setUpBinding() {
@@ -176,12 +187,15 @@ class DetailWeatherViewController: UIViewController {
     
     viewModel.humidityPercentageValue.map { value -> String in
       return "\(value)%"
-    }.bind(to: humidityValueLabel.rx.text)
+    }
+      .bind(to: humidityValueLabel.rx.text)
       .disposed(by: disposeBag)
     
     viewModel.visibilityValue.map { value -> String in
       return "\(value / 1000) km"
-    }.bind(to: visibilityValueLabel.rx.text).disposed(by: disposeBag)
+    }
+      .bind(to: visibilityValueLabel.rx.text)
+      .disposed(by: disposeBag)
     
     if let countryName = Utils.locale.getName(from: viewModel.currentWeather.systemInfos.country) {
       cityNameLabel.text?.append(", \(countryName)")
