@@ -54,9 +54,6 @@ class DetailViewModel: NSObject {
       }
       weathers.append(item)
     }
-    print(collectionViewsItems.value.forEach {
-        print($0.iconForThisDay)
-    })
   }
   
   func cancelRequest() {

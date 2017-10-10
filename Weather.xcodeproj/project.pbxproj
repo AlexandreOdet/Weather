@@ -20,6 +20,7 @@
 		FA1878921F822778009876B5 /* APIResponseWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1878911F822778009876B5 /* APIResponseWeather.swift */; };
 		FA1878941F8227D8009876B5 /* APIResponseWeatherInfosValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1878931F8227D8009876B5 /* APIResponseWeatherInfosValue.swift */; };
 		FA1878971F822BCB009876B5 /* Converter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1878961F822BCB009876B5 /* Converter.swift */; };
+		FA3EA9E01F8D19F30094D697 /* DetailForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3EA9DF1F8D19F30094D697 /* DetailForecastTableViewCell.swift */; };
 		FA502F681F84D85E007D2BB2 /* DetailWeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA502F671F84D85E007D2BB2 /* DetailWeatherViewController.swift */; };
 		FA502F6A1F84D9E4007D2BB2 /* APIResponseForecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA502F691F84D9E4007D2BB2 /* APIResponseForecast.swift */; };
 		FA502F6C1F84DA39007D2BB2 /* APIResponseForecastListValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA502F6B1F84DA39007D2BB2 /* APIResponseForecastListValue.swift */; };
@@ -61,6 +62,7 @@
 		FA1878911F822778009876B5 /* APIResponseWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseWeather.swift; sourceTree = "<group>"; };
 		FA1878931F8227D8009876B5 /* APIResponseWeatherInfosValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseWeatherInfosValue.swift; sourceTree = "<group>"; };
 		FA1878961F822BCB009876B5 /* Converter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Converter.swift; sourceTree = "<group>"; };
+		FA3EA9DF1F8D19F30094D697 /* DetailForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailForecastTableViewCell.swift; sourceTree = "<group>"; };
 		FA502F671F84D85E007D2BB2 /* DetailWeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWeatherViewController.swift; sourceTree = "<group>"; };
 		FA502F691F84D9E4007D2BB2 /* APIResponseForecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseForecast.swift; sourceTree = "<group>"; };
 		FA502F6B1F84DA39007D2BB2 /* APIResponseForecastListValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseForecastListValue.swift; sourceTree = "<group>"; };
@@ -135,6 +137,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		FA3EA9DE1F8D19D70094D697 /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				FA3EA9DF1F8D19F30094D697 /* DetailForecastTableViewCell.swift */,
+			);
+			path = CustomCell;
+			sourceTree = "<group>";
+		};
 		FA502F651F84D82C007D2BB2 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,7 +157,7 @@
 		FA502F661F84D841007D2BB2 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				FAF016091F8CAF080041CFE1 /* CustomCells */,
+				FAF016091F8CAF080041CFE1 /* CustomCell */,
 				FA502F671F84D85E007D2BB2 /* DetailWeatherViewController.swift */,
 			);
 			path = Detail;
@@ -256,17 +266,18 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		FAF016091F8CAF080041CFE1 /* CustomCells */ = {
+		FAF016091F8CAF080041CFE1 /* CustomCell */ = {
 			isa = PBXGroup;
 			children = (
 				FAF0160A1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift */,
 			);
-			path = CustomCells;
+			path = CustomCell;
 			sourceTree = "<group>";
 		};
 		FAF0160C1F8CC4F30041CFE1 /* Forecast */ = {
 			isa = PBXGroup;
 			children = (
+				FA3EA9DE1F8D19D70094D697 /* CustomCell */,
 				FAF016131F8CFD2F0041CFE1 /* DetailForecastViewController.swift */,
 			);
 			path = Forecast;
@@ -441,6 +452,7 @@
 				FAF0160E1F8CC80A0041CFE1 /* ForecastPerDay.swift in Sources */,
 				FAF016121F8CEF210041CFE1 /* WeekDay.swift in Sources */,
 				FA1878941F8227D8009876B5 /* APIResponseWeatherInfosValue.swift in Sources */,
+				FA3EA9E01F8D19F30094D697 /* DetailForecastTableViewCell.swift in Sources */,
 				FA18788E1F822518009876B5 /* APIResponseCoordinatesValue.swift in Sources */,
 				FAF016101F8CC9E10041CFE1 /* ForecastViewModel.swift in Sources */,
 				FA9941B11F85339000F4CB8E /* CardinalDirections.swift in Sources */,

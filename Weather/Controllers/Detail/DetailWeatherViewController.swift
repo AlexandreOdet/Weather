@@ -173,11 +173,10 @@ class DetailWeatherViewController: UIViewController {
     
     collectionView.rx.itemSelected
       .subscribe(onNext: { [weak self] indexPath in
-//        guard let strongSelf = self else { return }
-//        if let cell = strongSelf.collectionView.cellForItem(at: indexPath) {
-//          Animation.onClick(sender: cell.contentView)
-//        }
-        print("CollectionView.itemSelected at \(indexPath)")
+        guard let strongSelf = self else { return }
+        let forecastViewModel = ForecastViewModel(forecast: strongSelf.viewModel.collectionViewsItems.value[indexPath.row])
+        let nextViewController = DetailForecastViewController(viewModel: forecastViewModel)
+        strongSelf.navigationController?.pushViewController(nextViewController, animated: true)
       })
       .disposed(by: disposeBag)
   }
