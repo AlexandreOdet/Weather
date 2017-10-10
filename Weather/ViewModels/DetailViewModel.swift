@@ -20,6 +20,8 @@ class DetailViewModel: NSObject {
   
   var collectionViewsItems = Variable<[APIResponseForecastListValue]>([])
   
+  var forecastPerDay = Variable<[ThreeHoursWeather]>([])
+  
   init(weather: APIResponseWeather) {
     currentWeather = weather
   }
@@ -28,8 +30,8 @@ class DetailViewModel: NSObject {
     openWeatherCommunication.getForecast(of: currentWeather.name!, in: currentWeather.systemInfos.country!)
       .subscribe(
         onNext: { [weak self] response in
-          print(response.linesCount)
           guard let strongSelf = self else { return }
+          strongSelf.sortForecastResponseByDay(serverResponse: response)
           if !strongSelf.collectionViewsItems.value.isEmpty {
             strongSelf.collectionViewsItems.value.removeAll()
           }
@@ -37,6 +39,31 @@ class DetailViewModel: NSObject {
       },
         onError: { _ in return
       }).disposed(by: disposeBag)
+  }
+  
+  func sortForecastResponseByDay(serverResponse: APIResponseForecast) {
+    var currentDayOfTheWeek = -1
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = Constants.network.openWeatherApiForecastDateFormat
+    let calendar = Calendar.current
+    serverResponse.weatherList.forEach { item -> Void in
+      guard let currentDate = dateFormatter.date(from: item.date) else { return }
+      let forecast = ThreeHoursWeather(day: -1, weathers: [])
+      let day = calendar.component(.weekday, from: currentDate)
+      if day != currentDayOfTheWeek {
+        forecastPerDay.value.append(forecast)
+        currentDayOfTheWeek = day
+        forecast.dayOfTheWeek = currentDayOfTheWeek
+      }
+      forecast.weathers.append(item)
+    }
+    forecastPerDay.value.forEach {
+      print(WeekDay(dayOfTheWeek: $0.dayOfTheWeek).printableValue,
+            " -> minimale: ",
+            Converter.convertKelvinToCelsius(kelvin: $0.minimalTemp),
+            " maximale: ",
+            Converter.convertKelvinToCelsius(kelvin: $0.maximalTemp))
+    }
   }
   
   func cancelRequest() {
