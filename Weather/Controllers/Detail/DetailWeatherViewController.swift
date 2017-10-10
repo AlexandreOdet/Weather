@@ -150,7 +150,7 @@ class DetailWeatherViewController: UIViewController {
     let layout = UICollectionViewFlowLayout()
     layout.scrollDirection = .horizontal
     layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-    layout.itemSize = CGSize(width: (width - 100) / 5, height: 30)
+    layout.itemSize = CGSize(width: (width - 110) / 5, height: 50)
     
     collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
     collectionView.register(ForecastWeatherCollectionViewCell.self, forCellWithReuseIdentifier: collectionViewReuseIdentifier)
@@ -160,7 +160,7 @@ class DetailWeatherViewController: UIViewController {
       make.bottom.equalToSuperview().offset(-10)
       make.leading.equalToSuperview()
       make.trailing.equalToSuperview()
-      make.height.equalTo(50)
+      make.height.equalTo(70)
     }
     
     viewModel.collectionViewsItems.asObservable()
