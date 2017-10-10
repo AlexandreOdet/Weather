@@ -38,7 +38,9 @@ class HomeViewController: UIViewController {
     setUpSearchButton()
     setUpTableView()
     setUpLocateMeButton()
-    viewModel.isValid.map{ $0 }.bind(to: searchButton.rx.isEnabled).disposed(by: disposeBag)
+    viewModel.isValid.map{ $0 }
+      .bind(to: searchButton.rx.isEnabled)
+      .disposed(by: disposeBag)
   }
   
   private func setUpTableView() {
@@ -117,12 +119,9 @@ extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
     guard let components = place.addressComponents else { return }
     guard let cityComponent = components.first(where: {$0.type == "locality"}) else {return}
     guard let countryComponent = components.first(where: {$0.type == "country"}) else {return}
-    
-    let city = Variable<String>(cityComponent.name)
-    let country = Variable<String>(countryComponent.name)
-    
-    city.asObservable().bind(to: viewModel.cityName).disposed(by: disposeBag)
-    country.asObservable().bind(to: viewModel.countryName).disposed(by: disposeBag)
+
+    viewModel.cityName.value = cityComponent.name
+    viewModel.countryName.value = countryComponent.name
     
     searchController?.searchBar.text = "\(viewModel.cityName.value), \(viewModel.countryName.value)"
   }
