@@ -135,14 +135,6 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		FA1878951F822A10009876B5 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				FA1878961F822BCB009876B5 /* Converter.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
 		FA502F651F84D82C007D2BB2 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +164,7 @@
 		FA502F721F84E091007D2BB2 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				FA1878961F822BCB009876B5 /* Converter.swift */,
 				FA502F731F84E0A6007D2BB2 /* Utils.swift */,
 				FA1730981F850600006400C1 /* Animation.swift */,
 			);
@@ -202,7 +195,6 @@
 				FAF64DBD1F85112800557824 /* Enums */,
 				FA502F721F84E091007D2BB2 /* Utilities */,
 				FA502F6F1F84DCB5007D2BB2 /* Managers */,
-				FA1878951F822A10009876B5 /* Utils */,
 				FA18788C1F8223CE009876B5 /* Controllers */,
 				FA6DBDAC1F7C1FB2007FAD19 /* Models */,
 				FA6DBDA71F7C1CD6007FAD19 /* Network */,
