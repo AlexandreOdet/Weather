@@ -42,9 +42,6 @@ class HomeViewController: UIViewController {
   }
   
   private func setUpBindings() {
-    viewModel.isValid.map{ $0 }
-      .bind(to: searchButton.rx.isEnabled)
-      .disposed(by: disposeBag)
     viewModel.requestHasFailed.subscribe(onError: { [unowned self] _ in
       let alert = UIAlertController(title: "Erreur", message: "Oups il semble y avoir une erreur !", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -98,8 +95,13 @@ class HomeViewController: UIViewController {
     }
     searchButton.backgroundColor = .white
     searchButton.setTitle("Rechercher", for: .normal)
-    searchButton.setTitleColor(.lightGray, for: .disabled)
-    searchButton.setTitleColor(.black, for: .normal)
+    viewModel.isValid.map{ $0 }
+      .bind(to: searchButton.rx.isEnabled)
+      .disposed(by: disposeBag)
+    
+    viewModel.isValid.subscribe(onNext: { [unowned self] isValid in
+      self.searchButton.setTitleColor((isValid) ? .black : .lightGray, for: .normal)
+    }).disposed(by: disposeBag)
     searchButton.rx.tap.subscribe (onNext: { [unowned self] _ in
       self.viewModel.fetchWeatherFromApi(with: self.viewModel.cityName.value, in: self.viewModel.countryName.value)
     }).disposed(by: disposeBag)

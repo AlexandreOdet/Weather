@@ -58,7 +58,6 @@ class DetailWeatherViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    navigationItem.backBarButtonItem?.title = ""
     viewModel.viewDidLoad()
     setUpInfosInTown()
     setUpSeparatorViews()
