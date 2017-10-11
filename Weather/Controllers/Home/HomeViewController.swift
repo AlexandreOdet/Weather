@@ -45,12 +45,11 @@ class HomeViewController: UIViewController {
     viewModel.isValid.map{ $0 }
       .bind(to: searchButton.rx.isEnabled)
       .disposed(by: disposeBag)
-    viewModel.requestHasFailed.subscribe(onError: { [weak self] _ in
-      guard let strongSelf = self else { return }
+    viewModel.requestHasFailed.subscribe(onError: { [unowned self] _ in
       let alert = UIAlertController(title: "Erreur", message: "Oups il semble y avoir une erreur !", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
       alert.addAction(UIAlertAction(title: "Annuler", style: .destructive, handler: nil))
-      strongSelf.present(alert, animated: true, completion: nil)
+      self.present(alert, animated: true, completion: nil)
     }).disposed(by: disposeBag)
   }
   
@@ -66,14 +65,13 @@ class HomeViewController: UIViewController {
       }.disposed(by: disposeBag)
     
     tableView.rx.itemSelected
-      .subscribe(onNext: { [weak self] indexPath in
-        guard let strongSelf = self else { return }
-        if let cell = strongSelf.tableView.cellForRow(at: indexPath) {
+      .subscribe(onNext: { [unowned self] indexPath in
+        if let cell = self.tableView.cellForRow(at: indexPath) {
           Animation.onClick(sender: cell.contentView)
         }
-        guard let nextViewController = strongSelf.storyboard?.instantiateViewController(withIdentifier: "DetailWeatherViewController") as? DetailWeatherViewController else { return }
-        nextViewController.viewModel = DetailViewModel(weather: strongSelf.viewModel.items.value[indexPath.row])
-        strongSelf.navigationController?.pushViewController(nextViewController, animated: true)
+        guard let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailWeatherViewController") as? DetailWeatherViewController else { return }
+        nextViewController.viewModel = DetailViewModel(weather: self.viewModel.items.value[indexPath.row])
+        self.navigationController?.pushViewController(nextViewController, animated: true)
       }).disposed(by: disposeBag)
   }
   
