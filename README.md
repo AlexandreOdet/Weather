@@ -20,3 +20,4 @@ Using:
 And:
 
  - MVVM Architecture
+ - OpenWeatherMap API
