@@ -32,6 +32,7 @@ class DetailWeatherViewController: UIViewController {
   @IBOutlet weak var minimalTemperatureIcon: UIImageView!
   
   var hourInCustomCity = UILabel()
+  var currentWeatherInCity = UIImageView()
   
   var separatorTopView = UIView()
   var separatorBottomView = UIView()
@@ -59,10 +60,31 @@ class DetailWeatherViewController: UIViewController {
     super.viewDidLoad()
     navigationItem.backBarButtonItem?.title = ""
     viewModel.viewDidLoad()
+    setUpInfosInTown()
     setUpSeparatorViews()
     setUpCurrentWeatherInfos()
     setUpCollectionView()
     setUpBinding()
+  }
+  
+  private func setUpInfosInTown() {
+    view.addSubview(hourInCustomCity)
+    hourInCustomCity.snp.makeConstraints { (make) -> Void in
+      make.top.equalTo(cityNameLabel.snp.bottom).offset(10)
+      make.leading.equalTo(cityNameLabel)
+    }
+    hourInCustomCity.font = hourInCustomCity.font.withSize(14)
+    
+    view.addSubview(currentWeatherInCity)
+    currentWeatherInCity.snp.makeConstraints { (make) -> Void in
+      make.centerY.equalTo(hourInCustomCity)
+      make.trailing.equalTo(cityNameLabel)
+      make.size.equalTo(30)
+    }
+    currentWeatherInCity.contentMode = .scaleAspectFit
+    let urlString = "\(Constants.network.openWeatherApiIconsUrl)\(self.viewModel.currentWeather.weathers[0].icon!)\(Constants.network.openWeatherApiIconsFormat)"
+    let url = URL(string: urlString)
+    currentWeatherInCity.kf.setImage(with: url)
   }
   
   private func setUpSeparatorViews() {
@@ -184,6 +206,8 @@ class DetailWeatherViewController: UIViewController {
   
   private func setUpBinding() {
     cityNameLabel.text = "\(viewModel.currentWeather.name!)"
+    
+    viewModel.hourInGivenCity.bind(to: hourInCustomCity.rx.text).disposed(by: disposeBag)
     
     viewModel.humidityPercentageValue.map { value -> String in
       return "\(value)%"

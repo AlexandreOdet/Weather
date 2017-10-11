@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import CoreLocation
 
 class DetailViewModel: NSObject {
   
@@ -19,6 +20,18 @@ class DetailViewModel: NSObject {
   var openWeatherCommunication = OpenWeatherApiCommunication()
   
   var collectionViewsItems = Variable<[ForecastPerDay]>([])
+  
+  var hourInGivenCity: Observable<String> {
+    let location = CLLocation(latitude: self.currentWeather.coordinates.latitude!,
+                              longitude: self.currentWeather.coordinates.longitude!)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    dateFormatter.timeZone = location.timeZone
+    let timestamp = Date().timeIntervalSince1970
+    let date = Date(timeIntervalSince1970: timestamp)
+    let formattedString = dateFormatter.string(from: date)
+    return Observable.just(formattedString)
+  }
   
   init(weather: APIResponseWeather) {
     currentWeather = weather
