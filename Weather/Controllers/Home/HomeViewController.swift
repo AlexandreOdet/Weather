@@ -52,10 +52,6 @@ class HomeViewController: UIViewController {
       alert.addAction(UIAlertAction(title: "Annuler", style: .destructive, handler: nil))
       strongSelf.present(alert, animated: true, completion: nil)
     }).disposed(by: disposeBag)
-    
-    searchButton.rx.tap.subscribe (onNext: { [unowned self] _ in
-      self.viewModel.fetchWeatherFromApi(with: self.viewModel.cityName.value, in: self.viewModel.countryName.value)
-    }).disposed(by: disposeBag)
   }
   
   private func setUpTableView() {
@@ -106,6 +102,9 @@ class HomeViewController: UIViewController {
     searchButton.setTitle("Rechercher", for: .normal)
     searchButton.setTitleColor(.lightGray, for: .disabled)
     searchButton.setTitleColor(.black, for: .normal)
+    searchButton.rx.tap.subscribe (onNext: { [unowned self] _ in
+      self.viewModel.fetchWeatherFromApi(with: self.viewModel.cityName.value, in: self.viewModel.countryName.value)
+    }).disposed(by: disposeBag)
   }
   
   private func setUpLocateMeButton() {

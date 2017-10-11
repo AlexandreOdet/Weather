@@ -24,7 +24,7 @@ class HomeViewModel: NSObject {
   var isValid : Observable<Bool>{
     return Observable.combineLatest(self.cityName.asObservable(), self.countryName.asObservable()) { !$0.isEmpty && !$1.isEmpty }
   }
-  
+    
   var requestHasFailed = BehaviorSubject<Bool>(value: false)
   
   private var disposeBag = DisposeBag()
