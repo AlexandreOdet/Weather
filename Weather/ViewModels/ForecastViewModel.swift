@@ -17,6 +17,10 @@ class ForecastViewModel {
     return Observable.just(forecastOfTheDay.weathers)
   }
   
+  var isUserInteractionEnabledOnTableView: Observable<Bool> {
+    return Observable.just(false)
+  }
+  
   init(forecast: ForecastPerDay) {
     forecastOfTheDay = forecast
   }
