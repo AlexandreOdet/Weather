@@ -33,6 +33,8 @@ class DetailViewModel: NSObject {
     return Observable.just(formattedString)
   }
   
+  var requestHasFailed = BehaviorSubject<Bool>(value: false)
+  
   init(weather: APIResponseWeather) {
     currentWeather = weather
   }
@@ -45,7 +47,9 @@ class DetailViewModel: NSObject {
             guard let strongSelf = self else { return }
             strongSelf.sortForecastResponseByDay(serverResponse: response)
           },
-          onError: { _ in return
+          onError: { [weak self] error in
+            guard let strongSelf = self else { return }
+            strongSelf.requestHasFailed.onError(error)
         }).disposed(by: disposeBag)
     }
   }
@@ -75,12 +79,28 @@ class DetailViewModel: NSObject {
     openWeatherCommunication.cancelRequest()
   }
   
-  var sunriseDateTimestamp: Observable<Double> {
-    return Observable.just(currentWeather.systemInfos.sunrise)
+  var sunriseDate: Observable<String> {
+    var formattedSunriseDate: String = ""
+    let location = CLLocation(latitude: currentWeather.coordinates.latitude!,
+                              longitude: currentWeather.coordinates.longitude!)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    dateFormatter.timeZone = location.timeZone
+    let date = Date(timeIntervalSince1970: currentWeather.systemInfos.sunrise)
+    formattedSunriseDate = dateFormatter.string(from: date)
+    return Observable.just(formattedSunriseDate)
   }
   
-  var sunsetDateTimestamp: Observable<Double> {
-    return Observable.just(currentWeather.systemInfos.sunset)
+  var sunsetDate: Observable<String> {
+    var formattedSunriseDate: String = ""
+    let location = CLLocation(latitude: currentWeather.coordinates.latitude!,
+                              longitude: currentWeather.coordinates.longitude!)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "HH:mm"
+    dateFormatter.timeZone = location.timeZone
+    let date = Date(timeIntervalSince1970: currentWeather.systemInfos.sunset)
+    formattedSunriseDate = dateFormatter.string(from: date)
+    return Observable.just(formattedSunriseDate)
   }
   
   var visibilityValue: Observable<Int> {

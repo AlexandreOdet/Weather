@@ -265,28 +265,20 @@ class DetailWeatherViewController: UIViewController {
       .bind(to: maximalTemperatureLabel.rx.text)
       .disposed(by: disposeBag)
     
-    viewModel.sunriseDateTimestamp.map { [unowned self] timestamp -> String in
-      let location = CLLocation(latitude: self.viewModel.currentWeather.coordinates.latitude!,
-                                longitude: self.viewModel.currentWeather.coordinates.longitude!)
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "HH:mm"
-      dateFormatter.timeZone = location.timeZone
-      let date = Date(timeIntervalSince1970: timestamp)
-      return dateFormatter.string(from: date)
-      }
+    viewModel.sunriseDate
       .bind(to: sunriseLabel.rx.text)
       .disposed(by: disposeBag)
     
-    viewModel.sunsetDateTimestamp.map { [unowned self] timestamp -> String in
-      let location = CLLocation(latitude: self.viewModel.currentWeather.coordinates.latitude!,
-                                longitude: self.viewModel.currentWeather.coordinates.longitude!)
-      let dateFormatter = DateFormatter()
-      dateFormatter.dateFormat = "HH:mm"
-      dateFormatter.timeZone = location.timeZone
-      let date = Date(timeIntervalSince1970: timestamp)
-      return dateFormatter.string(from: date)
-      }
+    viewModel.sunsetDate
       .bind(to: sunsetLabel.rx.text)
       .disposed(by: disposeBag)
+    
+    viewModel.requestHasFailed.subscribe(onError: { [weak self] _ in
+      guard let strongSelf = self else { return }
+      let alert = UIAlertController(title: "Erreur", message: "Oups il semble y avoir un problème", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+      alert.addAction(UIAlertAction(title: "Annuler", style: .destructive, handler: nil))
+      strongSelf.present(alert, animated: true, completion: nil)
+    }).disposed(by: disposeBag)
   }
 }
