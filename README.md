@@ -11,6 +11,11 @@ Using:
  - ObjectMapper
  - AlamofireObjectMapper
  - GooglePlacePicker
+ - KingFisher
+ - TimeZoneLocate
+ - GooglePlaces
+ - GooglePlacePicker
+ - GoogleMaps
 
 And:
 
