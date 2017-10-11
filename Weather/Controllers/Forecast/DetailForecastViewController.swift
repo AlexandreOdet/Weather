@@ -34,19 +34,50 @@ class DetailForecastViewController: UIViewController {
     setUpTableView()
   }
   
+  private func calculateAverageTemp(minimalTemp: Double, maximalTemp: Double) -> Double {
+    return ((minimalTemp + maximalTemp) / 2)
+  }
+  
   private func setUpTableView() {
     tableView = UITableView(frame: view.frame, style: .grouped)
     tableView.register(DetailForecastTableViewCell.self, forCellReuseIdentifier: cellReuseIdentifier)
-    viewModel.isUserInteractionEnabledOnTableView.bind(to: tableView.rx.isUserInteractionEnabled).disposed(by: disposeBag)
+    viewModel.isUserInteractionEnabledOnTableView
+      .bind(to: tableView.rx.isUserInteractionEnabled)
+      .disposed(by: disposeBag)
     
     view.addSubview(tableView)
     tableView.snp.makeConstraints { (make) -> Void in
       make.edges.equalToSuperview()
     }
-    viewModel.itemsForTableView.bind(to: tableView.rx.items(cellIdentifier: cellReuseIdentifier,
-                                                            cellType: DetailForecastTableViewCell.self)) {
-                                                              row, element, cell in
-      print("cell \(row) is being created")
+    viewModel.itemsForTableView
+      .bind(to: tableView.rx.items(cellIdentifier: cellReuseIdentifier,
+                                   cellType: DetailForecastTableViewCell.self)) {
+                                    [unowned self] row, element, cell in
+                                    print("cell \(row) is being created")
+                                    let minimalTemp = self.viewModel.forecastOfTheDay.weathers[row].weatherInfos.minimalTemperature!
+                                    let maximalTemp = self.viewModel.forecastOfTheDay.weathers[row].weatherInfos.maximalTemperature!
+                                    let dateString = self.viewModel.forecastOfTheDay.weathers[row].date!
+                                    print("Date in viewModel -> ", dateString)
+                                    let averageTemp = Converter.convertKelvinToCelsius(kelvin:  self.calculateAverageTemp(minimalTemp: minimalTemp, maximalTemp: maximalTemp))
+                                    let nf = NumberFormatter()
+                                    nf.numberStyle = .decimal
+                                    nf.maximumFractionDigits = 1
+                                    let temperatureString = nf.string(from: NSNumber(value: averageTemp))
+                                    
+                                    let dateFormatter = DateFormatter()
+                                    dateFormatter.dateFormat = Constants.network.openWeatherApiForecastDateFormat
+                                    let date = dateFormatter.date(from: dateString)
+                                    dateFormatter.dateFormat = "HH:mm"
+                                    let dateFormattedString = dateFormatter.string(from: date!)
+                                    
+                                    cell.hourLabel.text = dateFormattedString
+                                    
+                                    cell.averageTempLabel.text = temperatureString! + Temperature.celsius.printableMetrics
+                                    
+                                    let urlString = "\(Constants.network.openWeatherApiIconsUrl)\(self.viewModel.forecastOfTheDay.weathers[row].currentWeather[0].icon!)\(Constants.network.openWeatherApiIconsFormat)"
+                                    let url = URL(string: urlString)
+                                    cell.iconImg.kf.setImage(with: url)
+                                    
       }.disposed(by: disposeBag)
   }
 }

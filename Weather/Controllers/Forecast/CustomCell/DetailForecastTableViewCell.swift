@@ -53,5 +53,6 @@ class DetailForecastTableViewCell: UITableViewCell {
       make.top.equalToSuperview()
       make.bottom.equalToSuperview()
     }
+    iconImg.contentMode = .scaleAspectFit
   }
 }
