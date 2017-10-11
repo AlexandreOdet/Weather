@@ -25,14 +25,16 @@ class DetailViewModel: NSObject {
   }
   
   func viewDidLoad() {
-    openWeatherCommunication.getForecast(of: currentWeather.name!, in: currentWeather.systemInfos.country!)
-      .subscribe(
-        onNext: { [weak self] response in
-          guard let strongSelf = self else { return }
-          strongSelf.sortForecastResponseByDay(serverResponse: response)
-      },
-        onError: { _ in return
-      }).disposed(by: disposeBag)
+    if Utils.network.isNetworkAvailable {
+      openWeatherCommunication.getForecast(of: currentWeather.name!, in: currentWeather.systemInfos.country!)
+        .subscribe(
+          onNext: { [weak self] response in
+            guard let strongSelf = self else { return }
+            strongSelf.sortForecastResponseByDay(serverResponse: response)
+          },
+          onError: { _ in return
+        }).disposed(by: disposeBag)
+    }
   }
   
   func sortForecastResponseByDay(serverResponse: APIResponseForecast) {

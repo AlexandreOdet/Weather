@@ -31,33 +31,37 @@ class HomeViewModel: NSObject {
   }
   
   func fetchWeatherFromApi(with city: String, in country: String) {
-    restApiWeather.getWeather(from: city, in: country).subscribe(
-      onNext: { [weak self] data in
-        guard let strongSelf = self else { return }
-        if let index = strongSelf.items.value.index(where: { $0.name == data.name }) {
-          strongSelf.items.value[index] = data
-        } else {
-          strongSelf.items.value.append(data)
-        }
-      },
-      onError: { error in
-        return
-    }).disposed(by: disposeBag)
+    if Utils.network.isNetworkAvailable {
+      restApiWeather.getWeather(from: city, in: country).subscribe(
+        onNext: { [weak self] data in
+          guard let strongSelf = self else { return }
+          if let index = strongSelf.items.value.index(where: { $0.name == data.name }) {
+            strongSelf.items.value[index] = data
+          } else {
+            strongSelf.items.value.append(data)
+          }
+        },
+        onError: { error in
+          return
+      }).disposed(by: disposeBag)
+    }
   }
   
   func fetchWeatherFromApi(with coordinates: [Double]) {
-    restApiWeather.getWeather(from: coordinates).subscribe(
-      onNext: { [weak self] data in
-        guard let strongSelf = self else { return }
-        if let index = strongSelf.items.value.index(where: { $0.name == data.name }) {
-          strongSelf.items.value[index] = data
-        } else {
-          strongSelf.items.value.append(data)
-        }
-      },
-      onError:{ _ in
-        return
-    }).disposed(by: disposeBag)
+    if Utils.network.isNetworkAvailable {
+      restApiWeather.getWeather(from: coordinates).subscribe(
+        onNext: { [weak self] data in
+          guard let strongSelf = self else { return }
+          if let index = strongSelf.items.value.index(where: { $0.name == data.name }) {
+            strongSelf.items.value[index] = data
+          } else {
+            strongSelf.items.value.append(data)
+          }
+        },
+        onError:{ _ in
+          return
+      }).disposed(by: disposeBag)
+    }
   }
   
   func viewDidLoad() {

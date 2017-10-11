@@ -153,6 +153,7 @@ class DetailWeatherViewController: UIViewController {
     
     collectionView = UICollectionView(frame: view.frame, collectionViewLayout: layout)
     collectionView.register(ForecastWeatherCollectionViewCell.self, forCellWithReuseIdentifier: collectionViewReuseIdentifier)
+    collectionView.backgroundColor = .clear
     
     view.addSubview(collectionView)
     collectionView.snp.makeConstraints { (make) -> Void in

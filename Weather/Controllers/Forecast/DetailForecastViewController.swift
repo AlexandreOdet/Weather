@@ -53,11 +53,9 @@ class DetailForecastViewController: UIViewController {
       .bind(to: tableView.rx.items(cellIdentifier: cellReuseIdentifier,
                                    cellType: DetailForecastTableViewCell.self)) {
                                     [unowned self] row, element, cell in
-                                    print("cell \(row) is being created")
                                     let minimalTemp = self.viewModel.forecastOfTheDay.weathers[row].weatherInfos.minimalTemperature!
                                     let maximalTemp = self.viewModel.forecastOfTheDay.weathers[row].weatherInfos.maximalTemperature!
                                     let dateString = self.viewModel.forecastOfTheDay.weathers[row].date!
-                                    print("Date in viewModel -> ", dateString)
                                     let averageTemp = Converter.convertKelvinToCelsius(kelvin:  self.calculateAverageTemp(minimalTemp: minimalTemp, maximalTemp: maximalTemp))
                                     let nf = NumberFormatter()
                                     nf.numberStyle = .decimal
