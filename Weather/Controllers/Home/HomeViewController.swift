@@ -38,6 +38,7 @@ class HomeViewController: UIViewController {
     setUpSearchButton()
     setUpTableView()
     setUpLocateMeButton()
+    setUpBindings()
   }
   
   private func setUpBindings() {
@@ -50,6 +51,10 @@ class HomeViewController: UIViewController {
       alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
       alert.addAction(UIAlertAction(title: "Annuler", style: .destructive, handler: nil))
       strongSelf.present(alert, animated: true, completion: nil)
+    }).disposed(by: disposeBag)
+    
+    searchButton.rx.tap.subscribe (onNext: { [unowned self] _ in
+      self.viewModel.fetchWeatherFromApi(with: self.viewModel.cityName.value, in: self.viewModel.countryName.value)
     }).disposed(by: disposeBag)
   }
   
@@ -101,25 +106,18 @@ class HomeViewController: UIViewController {
     searchButton.setTitle("Rechercher", for: .normal)
     searchButton.setTitleColor(.lightGray, for: .disabled)
     searchButton.setTitleColor(.black, for: .normal)
-    searchButton.addTarget(self, action: #selector(searchButtonTarget), for: .touchUpInside)
   }
   
   private func setUpLocateMeButton() {
     let rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "navigation"),
                                              style: .plain,
                                              target: self,
-                                             action: #selector(locateMeButtonTarget))
+                                             action: nil)
     navigationItem.rightBarButtonItem = rightBarButtonItem
-  }
-  
-  @objc func searchButtonTarget() {
-    if searchButton.isEnabled {
-      viewModel.fetchWeatherFromApi(with: viewModel.cityName.value, in: viewModel.countryName.value)
-    }
-  }
-  
-  @objc func locateMeButtonTarget() {
-    viewModel.getUserLocation()
+    
+    navigationItem.rightBarButtonItem?.rx.tap.subscribe (onNext: { [unowned self] _ in
+      self.viewModel.getUserLocation()
+    }).disposed(by: disposeBag)
   }
 }
 
