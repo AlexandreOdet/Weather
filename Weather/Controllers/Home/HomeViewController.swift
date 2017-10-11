@@ -14,7 +14,7 @@ import RxCocoa
 import Kingfisher
 
 class HomeViewController: UIViewController {
-
+  
   let disposeBag = DisposeBag()
   
   let viewModel = HomeViewModel()
@@ -38,21 +38,31 @@ class HomeViewController: UIViewController {
     setUpSearchButton()
     setUpTableView()
     setUpLocateMeButton()
+  }
+  
+  private func setUpBindings() {
     viewModel.isValid.map{ $0 }
       .bind(to: searchButton.rx.isEnabled)
       .disposed(by: disposeBag)
+    viewModel.requestHasFailed.subscribe(onError: { [weak self] _ in
+      guard let strongSelf = self else { return }
+      let alert = UIAlertController(title: "Erreur", message: "Oups il semble y avoir une erreur !", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+      alert.addAction(UIAlertAction(title: "Annuler", style: .destructive, handler: nil))
+      strongSelf.present(alert, animated: true, completion: nil)
+    }).disposed(by: disposeBag)
   }
   
   private func setUpTableView() {
     tableView.register(WeatherTableViewCustomCell.self, forCellReuseIdentifier: reuseIdentifier)
     viewModel.items.asObservable().bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier,
                                                                cellType: WeatherTableViewCustomCell.self)) {
-      row, element, cell in
-      cell.cityNameLabel.text = element.name
-      let urlString = "\(Constants.network.openWeatherApiIconsUrl)\(element.weathers![0].icon!)\(Constants.network.openWeatherApiIconsFormat)"
-      let url = URL(string: urlString)
-      cell.cityWeatherIcon.kf.setImage(with: url)
-    }.disposed(by: disposeBag)
+                                                                row, element, cell in
+                                                                cell.cityNameLabel.text = element.name
+                                                                let urlString = "\(Constants.network.openWeatherApiIconsUrl)\(element.weathers![0].icon!)\(Constants.network.openWeatherApiIconsFormat)"
+                                                                let url = URL(string: urlString)
+                                                                cell.cityWeatherIcon.kf.setImage(with: url)
+      }.disposed(by: disposeBag)
     
     tableView.rx.itemSelected
       .subscribe(onNext: { [weak self] indexPath in
@@ -72,7 +82,7 @@ class HomeViewController: UIViewController {
     
     searchController = UISearchController(searchResultsController: resultsViewController)
     searchController?.searchResultsUpdater = resultsViewController
-
+    
     navigationItem.titleView = searchController?.searchBar
     searchController?.searchBar.sizeToFit()
     searchController?.hidesNavigationBarDuringPresentation = false
@@ -119,7 +129,7 @@ extension HomeViewController: GMSAutocompleteResultsViewControllerDelegate {
     guard let components = place.addressComponents else { return }
     guard let cityComponent = components.first(where: {$0.type == "locality"}) else {return}
     guard let countryComponent = components.first(where: {$0.type == "country"}) else {return}
-
+    
     viewModel.cityName.value = cityComponent.name
     viewModel.countryName.value = countryComponent.name
     

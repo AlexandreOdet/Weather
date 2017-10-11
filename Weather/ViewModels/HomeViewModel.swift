@@ -10,6 +10,7 @@ import Foundation
 import CoreLocation
 
 import RxSwift
+import RxCocoa
 
 class HomeViewModel: NSObject {
   
@@ -18,6 +19,13 @@ class HomeViewModel: NSObject {
   var cityName = Variable<String>("")
   var countryName = Variable<String>("")
   var items = Variable<[APIResponseWeather]>([])
+
+  
+  var isValid : Observable<Bool>{
+    return Observable.combineLatest(self.cityName.asObservable(), self.countryName.asObservable()) { !$0.isEmpty && !$1.isEmpty }
+  }
+  
+  var requestHasFailed = BehaviorSubject<Bool>(value: false)
   
   private var disposeBag = DisposeBag()
   private var locationManager = CLLocationManager()
@@ -25,10 +33,7 @@ class HomeViewModel: NSObject {
   func cancelRequest() {
     restApiWeather.cancelRequest()
   }
-  
-  var isValid : Observable<Bool>{
-    return Observable.combineLatest(self.cityName.asObservable(), self.countryName.asObservable()) { !$0.isEmpty && !$1.isEmpty }
-  }
+
   
   func fetchWeatherFromApi(with city: String, in country: String) {
     if Utils.network.isNetworkAvailable {
@@ -41,8 +46,9 @@ class HomeViewModel: NSObject {
             strongSelf.items.value.append(data)
           }
         },
-        onError: { error in
-          return
+        onError: { [weak self] error in
+          guard let strongSelf = self else { return }
+          strongSelf.requestHasFailed.onError(error)
       }).disposed(by: disposeBag)
     }
   }
@@ -58,8 +64,9 @@ class HomeViewModel: NSObject {
             strongSelf.items.value.append(data)
           }
         },
-        onError:{ _ in
-          return
+        onError:{ [weak self] error in
+          guard let strongSelf = self else { return }
+          strongSelf.requestHasFailed.onError(error)
       }).disposed(by: disposeBag)
     }
   }
