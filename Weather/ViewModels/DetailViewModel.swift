@@ -64,7 +64,9 @@ class DetailViewModel: NSObject {
     serverResponse.weatherList.forEach { item -> Void in
       guard let currentDate = dateFormatter.date(from: item.date) else { return }
       let day = calendar.component(.weekday, from: currentDate)
-      if day != currentDayOfTheWeek {
+      let now = Date()
+      let today = calendar.component(.weekday, from: now)
+      if day != currentDayOfTheWeek && day != today {
         let forecast = ForecastPerDay(day: day, weathers: weathers)
         collectionViewsItems.value.append(forecast)
         currentDayOfTheWeek = day
