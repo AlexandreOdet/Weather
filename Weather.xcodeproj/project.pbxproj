@@ -39,6 +39,7 @@
 		FA9941AF1F8525F200F4CB8E /* Temperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9941AE1F8525F200F4CB8E /* Temperature.swift */; };
 		FA9941B11F85339000F4CB8E /* CardinalDirections.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9941B01F85339000F4CB8E /* CardinalDirections.swift */; };
 		FAAD98291F8BA80200B4199B /* APIResponseForecastCityValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAD98281F8BA80200B4199B /* APIResponseForecastCityValue.swift */; };
+		FAE8BDA61F974183009B3080 /* TodayForecastCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAE8BDA51F974183009B3080 /* TodayForecastCollectionViewCell.swift */; };
 		FAF0160B1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0160A1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift */; };
 		FAF0160E1F8CC80A0041CFE1 /* ForecastPerDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0160D1F8CC80A0041CFE1 /* ForecastPerDay.swift */; };
 		FAF016101F8CC9E10041CFE1 /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF0160F1F8CC9E10041CFE1 /* ForecastViewModel.swift */; };
@@ -83,6 +84,7 @@
 		FA9941AE1F8525F200F4CB8E /* Temperature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Temperature.swift; sourceTree = "<group>"; };
 		FA9941B01F85339000F4CB8E /* CardinalDirections.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardinalDirections.swift; sourceTree = "<group>"; };
 		FAAD98281F8BA80200B4199B /* APIResponseForecastCityValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponseForecastCityValue.swift; sourceTree = "<group>"; };
+		FAE8BDA51F974183009B3080 /* TodayForecastCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayForecastCollectionViewCell.swift; sourceTree = "<group>"; };
 		FAF0160A1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastWeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		FAF0160D1F8CC80A0041CFE1 /* ForecastPerDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastPerDay.swift; sourceTree = "<group>"; };
 		FAF0160F1F8CC9E10041CFE1 /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				FAF0160A1F8CAF200041CFE1 /* ForecastWeatherCollectionViewCell.swift */,
+				FAE8BDA51F974183009B3080 /* TodayForecastCollectionViewCell.swift */,
 			);
 			path = CustomCell;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 				FA18788E1F822518009876B5 /* APIResponseCoordinatesValue.swift in Sources */,
 				FAF016101F8CC9E10041CFE1 /* ForecastViewModel.swift in Sources */,
 				FA9941B11F85339000F4CB8E /* CardinalDirections.swift in Sources */,
+				FAE8BDA61F974183009B3080 /* TodayForecastCollectionViewCell.swift in Sources */,
 				FA6DBDA91F7C1CED007FAD19 /* RestApiBase.swift in Sources */,
 				FA6DBDAB1F7C1CFC007FAD19 /* OpenWeatherApiCommunication.swift in Sources */,
 				FA1730991F850600006400C1 /* Animation.swift in Sources */,

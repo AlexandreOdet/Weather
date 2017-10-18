@@ -16,8 +16,9 @@ import CoreLocation
 class DetailWeatherViewController: UIViewController {
   
   private let disposeBag = DisposeBag()
-  
   private let collectionViewReuseIdentifier = "WeatherForecastCell"
+  private let todayForecastCollectionViewReuseIdentifier = "TodayForecastCell"
+  
   var viewModel: DetailViewModel!
   
   @IBOutlet weak var cityNameLabel: UILabel!
@@ -43,6 +44,7 @@ class DetailWeatherViewController: UIViewController {
   var cloudinessValueLabel = UILabel()
   
   var collectionView: UICollectionView!
+  var todayForecastCollectionView: UICollectionView!
   
   deinit {
     viewModel.cancelRequest()
@@ -201,6 +203,54 @@ class DetailWeatherViewController: UIViewController {
         strongSelf.navigationController?.pushViewController(nextViewController, animated: true)
       })
       .disposed(by: disposeBag)
+    
+    let todayForecastLayout = UICollectionViewFlowLayout()
+    todayForecastLayout.scrollDirection = .horizontal
+    todayForecastLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    todayForecastLayout.itemSize = CGSize(width: (view.frame.width / 3.6), height: 80)
+    
+    todayForecastCollectionView = UICollectionView(frame: view.frame, collectionViewLayout: todayForecastLayout)
+    todayForecastCollectionView.register(TodayForecastCollectionViewCell.self, forCellWithReuseIdentifier: todayForecastCollectionViewReuseIdentifier)
+    todayForecastCollectionView.backgroundColor = .clear
+    todayForecastCollectionView.backgroundColor = .lightGray
+    todayForecastCollectionView.isUserInteractionEnabled = false
+    todayForecastCollectionView.contentMode = .center
+    
+    view.addSubview(todayForecastCollectionView)
+    todayForecastCollectionView.snp.makeConstraints { (make) -> Void in
+      make.width.equalToSuperview()
+      make.centerX.equalToSuperview()
+      make.height.equalTo(100)
+      make.bottom.equalTo(collectionView.snp.top).offset(-10)
+    }
+    
+    viewModel.todayForecastCollectionViewItems.asObservable()
+      .bind(to: todayForecastCollectionView.rx.items(cellIdentifier: todayForecastCollectionViewReuseIdentifier,
+                                                     cellType: TodayForecastCollectionViewCell.self)) {
+                                                      row, element, cell in
+                                                      var idx = 0
+                                                      cell.backgroundColor = .white
+                                                      if element.weathers.count > 0 {
+                                                        idx = element.weathers.count - 1
+                                                        let dateString = element.weathers[idx].date!
+                                                        let dateFormatter = DateFormatter()
+                                                        dateFormatter.dateFormat = Constants.network.openWeatherApiForecastDateFormat
+                                                        let date = dateFormatter.date(from: dateString)
+                                                        dateFormatter.dateFormat = "HH:mm"
+                                                        let dateFormattedString = dateFormatter.string(from: date!)
+                                                        cell.hourLabel.text = dateFormattedString
+                                                        let minimalTemp = element.weathers[idx].weatherInfos.minimalTemperature
+                                                        let maximalTemp = element.weathers[idx].weatherInfos.maximalTemperature
+                                                        let averageTemp = Converter.convertKelvinToCelsius(kelvin:
+                                                          Utils.weather.calculateAverageTemperature(minimal: minimalTemp ?? 0,
+                                                                                                    maximal: maximalTemp ?? 0))
+                                                        let nf = NumberFormatter()
+                                                        nf.numberStyle = .decimal
+                                                        nf.maximumFractionDigits = 1
+                                                        let temperatureString = nf.string(from: NSNumber(value: averageTemp))
+                                                        cell.averageTempLabel.text = "\(temperatureString!)" + Temperature.celsius.printableMetrics
+                                                      }
+    }.disposed(by: disposeBag)
   }
   
   private func setUpBinding() {

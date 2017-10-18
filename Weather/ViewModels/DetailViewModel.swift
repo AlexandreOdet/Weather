@@ -20,6 +20,7 @@ class DetailViewModel: NSObject {
   var openWeatherCommunication = OpenWeatherApiCommunication()
   
   var collectionViewsItems = Variable<[ForecastPerDay]>([])
+  var todayForecastCollectionViewItems = Variable<[ForecastPerDay]>([])
   
   var hourInGivenCity: Observable<String> {
     let location = CLLocation(latitude: self.currentWeather.coordinates.latitude!,
@@ -72,6 +73,10 @@ class DetailViewModel: NSObject {
         currentDayOfTheWeek = day
         weathers.removeAll()
         forecast.dayOfTheWeek = currentDayOfTheWeek
+      } else if day == today && !weathers.isEmpty {
+        let forecast = ForecastPerDay(day: day, weathers: weathers)
+        todayForecastCollectionViewItems.value.append(forecast)
+        weathers.removeAll()
       }
       weathers.append(item)
     }

@@ -46,4 +46,10 @@ class Utils {
       return current.localizedString(forRegionCode: countryCode) ?? nil
     }
   }
+  
+  class weather {
+    public class func calculateAverageTemperature(minimal: Double, maximal: Double) -> Double {
+      return ((minimal + maximal) / 2)
+    }
+  }
 }
