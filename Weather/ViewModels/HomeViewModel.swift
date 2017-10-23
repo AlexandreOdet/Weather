@@ -72,11 +72,25 @@ class HomeViewModel: NSObject {
   }
   
   func viewDidLoad() {
-    CityManager.fetchCitiesFromFile()
+    if let cities = CityManager.fetchCitiesFromFile() {
+      for city in cities.cities {
+        fetchWeatherFromApi(with: city.name, in: city.country)
+      }
+    }
   }
   
   func didTapSaveButton() {
-    CityManager.saveCitiesToFile()
+    let cities = Cities()
+    for item in items.value {
+      let city = City()
+      city.latitude = item.coordinates.latitude
+      city.longitude = item.coordinates.longitude
+      city.name = item.name
+      city.country = item.systemInfos.country
+      cities.cities.append(city)
+    }
+    CityManager.saveCitiesToFile(data: cities)
+    cities.cities.removeAll()
   }
 }
 

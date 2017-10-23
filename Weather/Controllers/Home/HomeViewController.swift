@@ -66,6 +66,7 @@ class HomeViewController: UIViewController {
         if let cell = self.tableView.cellForRow(at: indexPath) {
           Animation.onClick(sender: cell.contentView)
         }
+        self.viewModel.didTapSaveButton()
         guard let nextViewController = self.storyboard?.instantiateViewController(withIdentifier: "DetailWeatherViewController") as? DetailWeatherViewController else { return }
         nextViewController.viewModel = DetailViewModel(weather: self.viewModel.items.value[indexPath.row])
         self.navigationController?.pushViewController(nextViewController, animated: true)
