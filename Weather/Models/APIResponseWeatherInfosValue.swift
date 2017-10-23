@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseWeatherInfosValue: Mappable {
+final class APIResponseWeatherInfosValue: Mappable {
   
   var temperature: Double!
   var pressure: Int!

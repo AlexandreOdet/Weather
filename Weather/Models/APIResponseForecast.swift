@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseForecast: Mappable {
+final class APIResponseForecast: Mappable {
   
   var statusCode: Int!
   var city: APIResponseForecastCityValue!

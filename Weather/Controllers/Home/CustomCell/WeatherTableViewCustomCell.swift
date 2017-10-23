@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class WeatherTableViewCustomCell: UITableViewCell {
+final class WeatherTableViewCustomCell: UITableViewCell {
   
   var cityNameLabel = UILabel()
   var cityWeatherIcon = UIImageView()

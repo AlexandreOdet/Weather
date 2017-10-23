@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseRainInfosValue: Mappable {
+final class APIResponseRainInfosValue: Mappable {
   var volumeInLastThreeHours: Double!
   
   required init?(map: Map) {

@@ -10,7 +10,7 @@ import Foundation
 import RxSwift
 import CoreLocation
 
-class DetailViewModel: NSObject {
+final class DetailViewModel: NSObject {
   
   private let disposeBag = DisposeBag()
   

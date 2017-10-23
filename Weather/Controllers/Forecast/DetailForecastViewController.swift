@@ -11,7 +11,7 @@ import UIKit
 import SnapKit
 import RxSwift
 
-class DetailForecastViewController: UIViewController {
+final class DetailForecastViewController: UIViewController {
   var viewModel: ForecastViewModel!
   var tableView: UITableView!
   

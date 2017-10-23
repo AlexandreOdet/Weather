@@ -13,7 +13,7 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-class HomeViewController: UIViewController {
+final class HomeViewController: UIViewController {
   
   let disposeBag = DisposeBag()
   

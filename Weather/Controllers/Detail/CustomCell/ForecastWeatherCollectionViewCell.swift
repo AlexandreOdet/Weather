@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class ForecastWeatherCollectionViewCell: UICollectionViewCell {
+final class ForecastWeatherCollectionViewCell: UICollectionViewCell {
   let label = UILabel()
   
   init() {

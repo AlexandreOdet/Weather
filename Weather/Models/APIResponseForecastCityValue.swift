@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseForecastCityValue: Mappable {
+final class APIResponseForecastCityValue: Mappable {
   var id: Int!
   var name: String!
   var coordinates: APIResponseCoordinatesValue!

@@ -12,7 +12,7 @@ import CoreLocation
 import RxSwift
 import RxCocoa
 
-class HomeViewModel: NSObject {
+final class HomeViewModel: NSObject {
   
   var restApiWeather = OpenWeatherApiCommunication()
   

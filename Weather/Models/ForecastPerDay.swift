@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ForecastPerDay {
+final class ForecastPerDay {
   var dayOfTheWeek: Int = -1
   var weathers: [APIResponseForecastListValue] = []
   

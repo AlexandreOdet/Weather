@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseForecastListValue: Mappable {
+final class APIResponseForecastListValue: Mappable {
   
   var dataCalculation: Double!
   var weatherInfos: APIResponseWeatherInfosValue!

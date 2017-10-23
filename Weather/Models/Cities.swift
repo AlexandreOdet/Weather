@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class Cities: Mappable {
+final class Cities: Mappable {
   
   var cities: [City]!
   

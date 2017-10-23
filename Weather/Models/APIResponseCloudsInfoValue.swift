@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseCloudsInfoValue: Mappable {
+final class APIResponseCloudsInfoValue: Mappable {
   var percentage: Double!
   
   required init?(map: Map) {

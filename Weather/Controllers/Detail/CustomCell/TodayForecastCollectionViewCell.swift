@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class TodayForecastCollectionViewCell: UICollectionViewCell {
+final class TodayForecastCollectionViewCell: UICollectionViewCell {
   
   var hourLabel = UILabel()
   var weatherIcon = UIImageView()

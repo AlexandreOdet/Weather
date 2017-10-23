@@ -12,7 +12,7 @@ import AlamofireObjectMapper
 import RxSwift
 import RxCocoa
 
-class OpenWeatherApiCommunication: RestApiBase {
+final class OpenWeatherApiCommunication: RestApiBase {
   
   func getWeather(from city: String, in country: String) -> Observable<APIResponseWeather> {
     let finalUrl = baseUrl + "weather?"

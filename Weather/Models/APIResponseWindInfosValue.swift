@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseWindInfosValue: Mappable {
+final class APIResponseWindInfosValue: Mappable {
   var speed: Double!
   var degree: Double!
   

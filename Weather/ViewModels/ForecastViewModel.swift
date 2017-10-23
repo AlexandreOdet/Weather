@@ -9,7 +9,7 @@
 import Foundation
 import RxSwift
 
-class ForecastViewModel {
+final class ForecastViewModel {
   
   var forecastOfTheDay: ForecastPerDay!
   

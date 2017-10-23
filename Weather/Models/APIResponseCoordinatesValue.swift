@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseCoordinatesValue: Mappable {
+final class APIResponseCoordinatesValue: Mappable {
   
   var latitude: Double!
   var longitude: Double!

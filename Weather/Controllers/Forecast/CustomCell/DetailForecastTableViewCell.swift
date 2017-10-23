@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import SnapKit
 
-class DetailForecastTableViewCell: UITableViewCell {
+final class DetailForecastTableViewCell: UITableViewCell {
   
   var hourLabel = UILabel()
   var averageTempLabel = UILabel()

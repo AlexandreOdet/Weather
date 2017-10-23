@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class APIResponseSystemInfoValue: Mappable {
+final class APIResponseSystemInfoValue: Mappable {
   
   var type: Int!
   var id: Int!

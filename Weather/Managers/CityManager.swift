@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class CityManager {
+final class CityManager {
   
   public class func saveCitiesToFile(data: Cities) {
     let directory = NSTemporaryDirectory()

@@ -13,7 +13,7 @@ import RxSwift
 import TimeZoneLocate
 import CoreLocation
 
-class DetailWeatherViewController: UIViewController {
+final class DetailWeatherViewController: UIViewController {
   
   private let disposeBag = DisposeBag()
   private let collectionViewReuseIdentifier = "WeatherForecastCell"

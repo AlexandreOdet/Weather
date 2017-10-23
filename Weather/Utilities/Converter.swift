@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Converter {
+final class Converter {
   public class func convertKelvinToCelsius(kelvin: Double) -> Double {
     return kelvin - Constants.metrics.kelvinConverterValue
   }

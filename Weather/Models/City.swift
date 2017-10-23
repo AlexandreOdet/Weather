@@ -9,7 +9,7 @@
 import Foundation
 import ObjectMapper
 
-class City: Mappable {
+final class City: Mappable {
   var name: String!
   var latitude: Double!
   var longitude: Double!

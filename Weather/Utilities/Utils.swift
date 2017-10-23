@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 import SystemConfiguration
 
-class Utils {
-  class network {
+final class Utils {
+  final class network {
     public class func startSpinner() {
       UIApplication.shared.isNetworkActivityIndicatorVisible = true
     }
@@ -40,14 +40,14 @@ class Utils {
     }
   }
   
-  class locale {
+  final class locale {
     public class func getName(from countryCode: String) -> String? {
       let current = Locale(identifier: countryCode)
       return current.localizedString(forRegionCode: countryCode) ?? nil
     }
   }
   
-  class weather {
+  final class weather {
     public class func calculateAverageTemperature(minimal: Double, maximal: Double) -> Double {
       return ((minimal + maximal) / 2)
     }

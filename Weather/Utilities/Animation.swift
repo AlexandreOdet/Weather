@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class Animation {
+final class Animation {
   public class func onClick(sender: UIView, backgroundColor: UIColor = .lightGray) {
     sender.backgroundColor = backgroundColor
     UIView.animate(withDuration: Constants.duration.onClickDuration) {
