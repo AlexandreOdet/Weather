@@ -14,17 +14,10 @@ class CityManager {
   public class func saveCitiesToFile(data: Cities) {
     let directory = NSTemporaryDirectory()
     let pathToFile = directory.appending(Constants.database.citiesFileName)
-    print("path_to_file = \(pathToFile)")
     do {
       if let jsonString = data.toJSONString() {
-        try jsonString.write(toFile: pathToFile, atomically: true, encoding: String.Encoding.utf8)
-        print(" OK -----------> Everything goes well")
-      } else {
-        print(" KO ------------> Cannot create JSON String.")
+        try? jsonString.write(toFile: pathToFile, atomically: true, encoding: String.Encoding.utf8)
       }
-    }
-    catch {
-      print(" KO ------------> Something went wrong ->", error)
     }
   }
   
